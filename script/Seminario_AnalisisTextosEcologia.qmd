@@ -1,0 +1,145 @@
+---
+title: "TextAnalysis4Ecology"
+author: "Elena Velado-Alonso"
+format: html
+editor: visual
+---
+
+# Análisis de textos con R: Ejemplos útiles para la ecología.
+
+Trabajar con caracteres (string data) en R suele ser percibido como una tarea ardua por muchos usuarios. Normalmente, la formación en programación y análisis de datos se centra en cuestiones numéricas y analíticas, y rara vez se trata en profundidad el trabajo con caracteres. Sin embargo, el trabajo en ecología requiere trabajar con caracteres frecuentemente. Además, el creciente uso de bases de datos y los principios FAIR <https://www.go-fair.org/fair-principles/> está aumentando la información presentada en caracteres y la necesidad de saber trabajar con ellos en los entornos de programación. Por tanto, no saber trabajar con caracteres limita la reproducibilidad de los flujos de trabajo en ecología.
+
+![](images/meme1.png)
+
+En este seminario:
+
+-   repasaremos conceptos básicos del trabajo con caracteres en R
+
+-   aprenderemos a leer archivos pdf y a limpiar textos para su posterior análisis
+
+-   veremos ejemplos prácticos para la limpieza automática de nombres taxonómicos
+
+-   haremos gráficos de nubes de palabras
+
+-   cálculos simples de las frecuencias de palabras en textos y correlación entre palabras para el análisis del contenido.
+
+## Caracteres en R
+
+En R, los textos se representan como series de caracteres (character strings). Los caracteres se definen con comillas simples o dobles y pueden ser guardados en objetos de clase "character". Por ejemplo:
+
+```{r}
+"esto es un texto"
+a <- "esto es otro texto"
+a
+class(a)
+```
+
+Dentro de los character strings se pueden usar comillar. Si se usa comillas simples, se pueden usar comillas dobles dentro del texto y viceversa. Por ejemplo:
+
+```{r}
+x <- "El grupo de trabajo de Ecoinformática es el más 'cool' de la AEET"
+x
+```
+
+Se pueden concatenar caracteres con la función `paste()`, que además permite definir cómo se realiza la concatenación. También la función `rep()`nos ayuda a repetir elementos de un vector. Por ejemplo:
+
+```{r}
+name <- "Mochi"
+
+surname <- "Condatos"
+
+paste(name, surname)
+
+paste(name, surname, sep = "_")
+
+paste0(name, surname)
+
+paste(rep(name, 4), collapse = '')
+```
+
+Distintas funciones nos pueden ayudar a visibililzar los caracteres:
+
+-   print() nos permite imprimir el contenido de un objeto.
+
+-   noquote() nos permite imprimir el contenido de un objeto sin comillas.
+
+-   cat() concatena e imprime y también nos permite definir cómo se imprime el contenido de un objeto.
+
+```{r}
+name <- "Mochi"
+
+surname <- "Condatos"
+
+scientist <- paste(name, surname)
+
+print(scientist)
+
+noquote(scientist)
+
+cat(scientist) 
+
+#con un separador específico
+cat(letters, sep = "-") 
+
+```
+
+Se puede contar el número de elementos que tiene un objeto string con la función `length()`.
+
+La función `nchar()` nos da el número de caracteres de un string.
+
+```{r}
+
+length(scientist)
+
+length(letters)
+
+nchar(scientist)
+
+```
+
+Los caracteres se pueden convertir en mayúsculas o minúsculas con las funciones `toupper()` y `tolower()`:
+
+```{r}
+
+toupper(scientist)
+tolower(scientist)
+```
+
+Para reemplazar alguno de los caracteres de un string, se puede usar la función `chartr()`. Por ejemplo, para reemplazar las vocales con tilde por vocales sin tilde:
+
+```{r}
+x <- "Mochi es el mejor pERRo para aprender a programar."
+chartr(old = "ERR", new = "err", x)
+```
+
+Para extraer partes de un string, se puede usar la función `substr()`. Por ejemplo, para extraer los primeros 5 caracteres de un string:
+
+```{r}
+substr(x, start = 1, stop = 5)
+substr(x, start = 18, stop = 23)
+
+```
+
+También se puede separar un string en partes más pequeñas con la función `strsplit()`. Por ejemplo, para separar las palabras de una frase:
+
+```{r}
+x <- "Mochi es el mejor perro para aprender a programar."
+y <- strsplit(x, split = " ")
+y
+```
+
+También podemos identificar patrones de caracteres con la función `grep()`. Por ejemplo, para identificar las palabras que contienen la letra "o":
+
+```{r}
+
+z <- c("Mochi", "es", "el", "mejor", "perro", "para", "aprender", "a", "programar")
+  
+grep("o", z, value=TRUE)
+grepl("o", z)
+
+grep("^M", z, value=TRUE)
+grep("r$", z, value=TRUE)
+
+```
+
+Para modificar el contenido de un string, se pueden usar las funciones `sub()` y `gsub()`. La función `sub()` reemplaza la primera ocurrencia de un patrón en un string, mientras que `gsub()` reemplaza todas las ocurrencias de un patrón en un string. Por ejemplo:

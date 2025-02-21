@@ -1,8 +1,21 @@
 ---
-title: "TextAnalysis4Ecology"
+title: | 
+  | Análisis de textos con R: Ejemplos útiles para la ecología ![](images/ecoinf_10.jpg){width=80%,fig-align="right"}
 author: "Elena Velado-Alonso"
-format: html
+date: today
+date-format: "DD/MM/YYYY"
+toc: true
+toc-depth: 4
+toc-title: "Índice"
+format:
+  html:
+    link-external-newwindow: true
+    # css: styles.css
+  gfm: default
 editor: visual
+editor_options: 
+  chunk_output_type: console
+number-sections: true
 ---
 
 # Análisis de textos con R: Ejemplos útiles para la ecología.
@@ -23,7 +36,7 @@ En este seminario:
 
 -   cálculos simples de las frecuencias de palabras en textos y correlación entre palabras para el análisis del contenido.
 
-## Caracteres en R
+## Caracteres en R base
 
 En R, los textos se representan como series de caracteres (character strings). Los caracteres se definen con comillas simples o dobles y pueden ser guardados en objetos de clase "character". Por ejemplo:
 
@@ -76,9 +89,6 @@ print(scientist)
 
 noquote(scientist)
 
-cat(scientist) 
-
-#con un separador específico
 cat(letters, sep = "-") 
 
 ```
@@ -128,7 +138,7 @@ y <- strsplit(x, split = " ")
 y
 ```
 
-También podemos identificar patrones de caracteres con la función `grep()`. Por ejemplo, para identificar las palabras que contienen la letra "o":
+También podemos identificar patrones de caracteres con la función `grep()`. Por ejemplo, para identificar las palabras que contienen la letra "o", las que empiezan por "M" o las que terminan en "r":
 
 ```{r}
 
@@ -142,4 +152,297 @@ grep("r$", z, value=TRUE)
 
 ```
 
+Para especificar la posicion en un string hay que usar expresiones regulares, por ejemplo “\^” para caracteres al principio y “\$” para caracteres al final. Por tanto, algunos caracteres son usados como metacaracteres con un significado especial en las expresiones regulares. El punto (.), el asterisco (\*), el signo de interrogación (?), el signo más (+), el signo de intercalación (\^), el signo del dólar (\$), los corchetes (\[, \]), las llaves ({, }), el guión (-), entre otros tienen un significado no literal. Puedes consultar más información por ejemplo aquí
+
+```{r}
+
+?regex
+```
+
+o aqui <https://uc-r.github.io/regex#regex_functions_base>.
+
+En mi opinión, las expresiones regulares y los metacaracteres son una de las dificultades que nos encontramos a la hora de trabajar con caracteres en R base. Sin embargo, gente lista ha desarrollado paquetes que nos ayudan con todo esto :).
+
 Para modificar el contenido de un string, se pueden usar las funciones `sub()` y `gsub()`. La función `sub()` reemplaza la primera ocurrencia de un patrón en un string, mientras que `gsub()` reemplaza todas las ocurrencias de un patrón en un string. Por ejemplo:
+
+```{r}
+texto <- "Hola AEET"
+texto
+nuevo_texto <- gsub("AEET", "EcoInformatica", texto)
+nuevo_texto
+```
+
+R base tiene una serie de funciones muy útiles para comparar dos vectores de caracteres.
+
+```{r}
+library(gt)
+
+# Crear data frame con la información
+set_operations <- data.frame(
+  Function = c("union()", "intersect()", "setdiff()", "setequal()", "identical()", 
+               "is.element()", "%in%()", "sort()"),
+  Description = c("set union", "intersection", "set difference", "equal sets", "exact equality",
+                  "is element", "contains", "sorting")
+)
+
+set_operations %>%
+  gt() %>%
+  tab_header(
+    title = "Set Operations in R")
+```
+
+Yo uso frecuentemente estas funciones para trabajar con especies y nombres taxonómicos. Por ejemplo:
+
+```{r}
+
+species1 <- c("Protaetia morio", "Agrypnus murinus", "Stenobothrus lineatus", "Philoscia muscorum")
+
+species2 <- c("Protaetia morio", "Tettigonia cantans", "Stenobothrus lineatus", "Mangora acalypha")
+
+union(species1, species2) #todas las especies únicas
+
+intersect(species1, species2) #especies comunes
+
+setdiff(species1, species2) #especies en species1 pero no en species2
+setdiff(species2, species1) #especies en species2 pero no en species1
+
+setequal(species1, species2) #son iguales?
+
+species3 <- c("Philoscia muscorum", "Stenobothrus lineatus", "Agrypnus murinus", "Protaetia morio")
+
+setequal(species1, species3)
+identical(species1, species3)
+
+is.element("Protaetia morio", species1)
+
+"Protaetia morio" %in% species1
+
+sort(species1)
+```
+
+Una de mis funciones favoritas para encontrar errores al trabajar con nombres de especies es la función `agrep` que permite buscar patrones aproximados en un vector de caracteres.
+
+```{r}
+datos_abejas <- data.frame(
+  Especie = c("Andrena_chrysosceles", "Lasioglossum_villosulum", "Bombus_silvarum",
+              "Halictus_tumulorum", "Apis_mellifera"),
+  Abundancia = c(20, 15, 8, 12, 5)
+)
+
+
+agrep("Bombus_sylvarum", datos_abejas$Especie, value = TRUE)
+
+```
+
+## Paquete `stringr`: caracteres con filosofía tidy
+
+`stringr` es un paquete desarrollado para manejar caracteres bajo la filosofía tidy, que mejora algunas aplicabilidades como trabajar con NA.
+
+Existen cuatro familias principales de funciones en stringr:
+
+-   Manipulación de caracteres: estas funciones permiten manipular caracteres individuales dentro de vectores.
+
+-   Herramientas de espacios en blanco para añadir, eliminar y manipular espacios en blanco.
+
+-   Operaciones sensibles a la localización.
+
+-   Funciones de concordancia de patrones, incluyendo las expresiones regulares.
+
+```{r}
+library(stringr)
+scientist
+str_length(scientist) #equivalente a nchart()
+
+str_sub(scientist, start = 2, end = -2) #equivalente a substr()
+
+str_to_upper(scientist) #equivalente a toupper()
+
+str_to_lower(scientist) #equivalente a tolower()
+```
+
+```{r}
+texto <- "Hola AEET"
+texto
+nuevo_texto <- str_replace(texto, "AEET", "EcoInformatica ") #equivalente a sub()
+nuevo_texto
+
+str_trim(nuevo_texto) #elimina espacios en blanco al principio y al final
+
+str_split(nuevo_texto, boundary("word")) #separa palabras
+str_split(nuevo_texto, "") #separa caracteres
+
+```
+
+```{r}
+print(datos_abejas$Especie)
+str_detect("Apis_mellifera", datos_abejas$Especie) #equivalente a grepl()
+
+str_replace("Bombus_mellifera", "Bombus", "Apis") #equivalente a gsub()
+
+abejorros <- c("Bombus_silvarum", "Bombus_terrestris", "Bombus_pascuorum", "Bombus_pratorum", "Bombus_humilis")
+str_count(abejorros, "Bombus") #cuenta el número de veces que aparece un patrón
+
+str_locate(abejorros, "Bombus") #localiza la posición de un patrón
+
+str_match(abejorros, "Bombus") #devuelve el patrón encontrado
+
+str_split(abejorros, "_") #equivalente a strsplit()
+```
+
+```{r}
+poema_espronceda <- str_c("Con diez cañones por banda, viento ",
+                          "en popa a toda vela, no corta el mar, ",
+                          "sino vuela un velero bergantín: bajel ",
+                          "pirata que llaman, por su bravura,",
+                          "el Temido, en todo mar conocido ",
+                          "del uno al otro confín.")
+
+poema_espronceda
+
+str_flatten(poema_espronceda) #equivalente a paste()
+
+cat(str_wrap(poema_espronceda, width = 27)) #adapta el texto a un tamaño determinado
+
+```
+
+Puedes encontrar más información sobre el paquete `stringr` en la documentación oficial <https://stringr.tidyverse.org/> y la hoja resumen <https://github.com/rstudio/cheatsheets/blob/main/strings.pdf>.
+
+
+## Limpieza automática de nombres taxonómicos con gbif
+
+En ecología, es frecuente trabajar con nombres taxonómicos de especies. Estos nombres pueden contener errores tipográficos, abreviaturas, sinónimos, etc. que dificultan su análisis. 
+Aunque es recomendable hacer una limpieza detallada y manual, se puede hacer una aproximación de limpieza automática de nombres taxonómicos con la Taxonomía Base de GBIF
+<https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c> con el paquete `rgbif`.
+
+```{r}
+library(tidyverse)
+library(rgbif)
+library(here)
+
+#For Bees
+#1) Load bee spp names
+df.e <- read_delim(here("data/df.e.csv"), delim = ";")
+
+#Create poll spp name dataset
+Poll_spp <- df.e |> select(Bee_name) |>  
+  distinct() |>
+  arrange(Bee_name) |> pull()
+Poll_spp
+
+#2 )Retrieve GBIF taxonomy
+#name_backbone_checklist()
+#Lookup names in the GBIF backbone taxonomy in a checklist.
+
+gbif_names <- name_backbone_checklist(name_data = Poll_spp, order = "   Hymenoptera")
+gbif_names
+
+
+#Match and unmatched records
+matched = gbif_names |>  filter(matchType == "EXACT") #92 matched
+matched
+
+unmatched = gbif_names |> filter(matchType != "EXACT") #10 unmached
+unmatched
+unique(unmatched$matchType)
+#"FUZZY" because of misspelling   
+
+#Checking unmatched names
+fixing <- unmatched |>  select(scientificName, matchType, verbatim_name)
+#When it is FUZZY it seems to find the correct name easily
+
+
+#Creating a data.frame that contects old name with typo and newname with corrected scientific name
+
+fixing <- fixing |>
+  rename(Bee_name = verbatim_name) |>
+  mutate(sci_name =  word(scientificName, 1,2)) |>
+  select(-c(scientificName, matchType))
+fixing
+
+#3) Creating a dataframe with a new column with the Fixed names: Fixed_bee_name
+
+#Estonian poll corrected
+df.e <- df.e |>
+  left_join(fixing) |>
+  mutate(Fixed_bee_name = ifelse(is.na(sci_name), Bee_name, sci_name)) |>
+  select(- sci_name)
+df.e
+```
+
+
+## Leer pdf en R y limpiar textos
+
+La función `pdf_data` del paquete `pdftools` permite extraer el texto de un archivo pdf. 
+Sin embargo, si existen fotografías o figuras no siempre es posible extraer el texto de un pdf. 
+En estos casos se puede usar la función `pdf_ocr_text` para extraer el texto mediante reconocimiento óptico (OCR). 
+
+```{r}
+library(pdftools)
+library(purrr)
+
+#folder path
+folder_path <- here("texts/")
+
+#PDF files: Notas Ecoinformáticas + description of Ecoinformatica group
+pdf_files <- list.files(folder_path, pattern = "\\.pdf$", full.names = TRUE)
+
+#Function to extract text from PDFs already in tidyformat 
+read_pdf <- function(doc) {
+  t <- pdf_data(doc) 
+  pt <- map_chr(t, ~ .x |>  select(text) |>  unlist() |>  paste0(collapse = " "))
+  textocompleto <- paste0(pt, collapse = " ")
+  
+  # If the extracted text is too short, use OCR
+  if (nchar(textocompleto) < 15) {
+    textocompleto <- paste0(pdf_ocr_text(doc), collapse = " ")
+  }
+  
+  # Return a tibble with the document name and extracted text
+  tibble(document = doc, text = textocompleto)
+}
+
+textos <- map(pdf_files, read_pdf)
+
+textos_df <- bind_rows(textos) |> 
+  mutate(document = str_replace(document, pattern = paste0(folder_path, "/"), replacement = ""))
+
+```
+
+```{r}
+library(textclean)
+library(tidytext)
+
+
+clean_text <- function(text) {
+  text |>  
+  str_to_lower() |> 
+  str_remove_all(pattern = "[[:punct:]]") |> # remove punctuation
+  replace_date(replacement = "") |> # remove dates
+  replace_time(replacement = "") |> # remove time
+  str_remove_all(pattern = "[^\\s]*[0-9][^\\s]*") |>  # remove mixed string n number
+  replace_contraction() |>  # replace contraction to their multi-word forms
+  replace_word_elongation() |>  # replace informal writing with known semantic replacements
+  str_squish() |>  # reduces repeated whitespace inside a string
+  str_trim() |>  # removes whitespace from start and end of string
+  str_replace_all("inteligencia artificial", "inteligencia_artificial") |> #avoiding collocations
+  str_replace_all("asociación española de ecología terrestre", "asociación_española_de_ecología_terrestre") |>  #avoiding collocations
+  str_split(boundary("word")) |> 
+  unlist() |>
+  as_tibble(value = .) |>
+  #unnest_tokens(word, value, strip_numeric = TRUE) %>%
+  anti_join(stop_words_es)  |>  # remove stop words
+  filter(!str_detect(value, "^http"))  |>  #removes webpages
+  filter(!str_detect(value, "^www"))  |>  #removes webpages
+  filter(!str_detect(value, "^doi")) |> #removes bibliographic repetitions
+  filter(!str_detect(value, "^pp")) |>  #removes bibliographic repetitions
+  filter(!str_detect(value, "^al")) |>  #removes bibliographic repetitions
+  drop_na() |> 
+  group_by(value) |> 
+  mutate(countWords = n()) |> 
+  distinct()
+}
+
+textos_df_clean <- textos_df |>
+  mutate(text = map(text, clean_text))
+
+```

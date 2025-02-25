@@ -178,22 +178,16 @@ nuevo_texto
 
 R base tiene una serie de funciones muy útiles para comparar dos vectores de caracteres.
 
-```{r comparar caracteres}
-library(gt)
-
-# Crear data frame con la información
-set_operations <- data.frame(
-  Function = c("union", "intersect", "setdiff", "setequal", "identical", 
-               "is.element", "sort"),
-  Description = c("set union", "intersection", "set difference", "equal sets", "exact equality",
-                  "is element", "sorting")
-)
-
-set_operations |> 
-  gt() |> 
-  tab_header(
-    title = "Set Operations in R")
-```
+| Set Operations in R |                |
+|---------------------|----------------|
+| Function            | Description    |
+| union()             | set union      |
+| intersect()         | intersection   |
+| setdiff()           | set difference |
+| setequal()          | equal sets     |
+| identical()         | exact equality |
+| is.element()        | is element     |
+| sort()              | sorting        |
 
 Yo uso frecuentemente estas funciones para trabajar con especies y nombres taxonómicos. Por ejemplo:
 

@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Elena Velado-Alonso">
+
+<title>quarto-inputa5dcaef6</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Seminario_AnalisisTextosEcologia_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Seminario_AnalisisTextosEcologia_files/libs/quarto-html/quarto.js"></script>
+<script src="Seminario_AnalisisTextosEcologia_files/libs/quarto-html/popper.min.js"></script>
+<script src="Seminario_AnalisisTextosEcologia_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Seminario_AnalisisTextosEcologia_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Seminario_AnalisisTextosEcologia_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Seminario_AnalisisTextosEcologia_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Seminario_AnalisisTextosEcologia_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Seminario_AnalisisTextosEcologia_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Seminario_AnalisisTextosEcologia_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#análisis-de-textos-con-r-ejemplos-útiles-para-la-ecología." id="toc-análisis-de-textos-con-r-ejemplos-útiles-para-la-ecología." class="nav-link active" data-scroll-target="#análisis-de-textos-con-r-ejemplos-útiles-para-la-ecología."><span class="header-section-number">1</span> Análisis de textos con R: Ejemplos útiles para la ecología.</a>
+  <ul>
+  <li><a href="#caracteres-en-r-base" id="toc-caracteres-en-r-base" class="nav-link" data-scroll-target="#caracteres-en-r-base"><span class="header-section-number">1.1</span> Caracteres en R base</a></li>
+  <li><a href="#paquete-stringr-caracteres-con-filosofía-tidy" id="toc-paquete-stringr-caracteres-con-filosofía-tidy" class="nav-link" data-scroll-target="#paquete-stringr-caracteres-con-filosofía-tidy"><span class="header-section-number">1.2</span> Paquete <code>stringr</code>: caracteres con filosofía tidy</a></li>
+  <li><a href="#limpieza-automática-de-nombres-taxonómicos-con-gbif" id="toc-limpieza-automática-de-nombres-taxonómicos-con-gbif" class="nav-link" data-scroll-target="#limpieza-automática-de-nombres-taxonómicos-con-gbif"><span class="header-section-number">1.3</span> Limpieza automática de nombres taxonómicos con gbif</a></li>
+  <li><a href="#leer-pdf-en-r-y-limpiar-textos" id="toc-leer-pdf-en-r-y-limpiar-textos" class="nav-link" data-scroll-target="#leer-pdf-en-r-y-limpiar-textos"><span class="header-section-number">1.4</span> Leer pdf en R y limpiar textos</a></li>
+  <li><a href="#limpieza-de-textos" id="toc-limpieza-de-textos" class="nav-link" data-scroll-target="#limpieza-de-textos"><span class="header-section-number">1.5</span> Limpieza de textos</a></li>
+  <li><a href="#análisis-de-textos-frecuencia-y-nubes-de-palabras" id="toc-análisis-de-textos-frecuencia-y-nubes-de-palabras" class="nav-link" data-scroll-target="#análisis-de-textos-frecuencia-y-nubes-de-palabras"><span class="header-section-number">1.6</span> Análisis de textos: Frecuencia y nubes de palabras</a></li>
+  <li><a href="#análisis-de-textos-relación-entre-palabras" id="toc-análisis-de-textos-relación-entre-palabras" class="nav-link" data-scroll-target="#análisis-de-textos-relación-entre-palabras"><span class="header-section-number">1.7</span> Análisis de textos: Relación entre palabras</a></li>
+  <li><a href="#recursos-y-agradecimientos" id="toc-recursos-y-agradecimientos" class="nav-link" data-scroll-target="#recursos-y-agradecimientos"><span class="header-section-number">1.8</span> Recursos y agradecimientos</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Seminario_AnalisisTextosEcologia.md"><i class="bi bi-file-code"></i>Github (GFM)</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><div class="line-block">Análisis de textos con R: Ejemplos útiles para la ecología <img src="images/ecoinf_10.jpg" class="img-fluid"></div></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Elena Velado-Alonso </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">25/02/2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="análisis-de-textos-con-r-ejemplos-útiles-para-la-ecología." class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Análisis de textos con R: Ejemplos útiles para la ecología.</h1>
+<p>Trabajar con caracteres (string data) en R suele ser percibido como una tarea ardua por muchos usuarios. Normalmente, la formación en programación y análisis de datos se centra en cuestiones numéricas y analíticas, y rara vez se trata en profundidad el trabajo con caracteres. Sin embargo, el trabajo en ecología requiere trabajar con caracteres frecuentemente. Además, el creciente uso de bases de datos y los principios FAIR <a href="https://www.go-fair.org/fair-principles/" class="uri">https://www.go-fair.org/fair-principles/</a> está aumentando la información presentada en caracteres y la necesidad de saber trabajar con ellos en los entornos de programación. Por tanto, no saber trabajar con caracteres limita la reproducibilidad de los flujos de trabajo en ecología.</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/meme1.png" class="img-fluid quarto-figure quarto-figure-left figure-img"></p>
+</figure>
+</div>
+<p>En este seminario:</p>
+<ul>
+<li><p>repasaremos conceptos básicos del trabajo con caracteres en R</p></li>
+<li><p>veremos ejemplos prácticos para la limpieza automática de nombres taxonómicos</p></li>
+<li><p>aprenderemos a leer archivos pdf</p></li>
+<li><p>limpiar textos para su posterior análisis</p></li>
+<li><p>haremos gráficos de nubes de palabras</p></li>
+<li><p>cálculos simples de las frecuencias de palabras en textos y correlación entre palabras para el análisis del contenido.</p></li>
+</ul>
+<section id="caracteres-en-r-base" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="caracteres-en-r-base"><span class="header-section-number">1.1</span> Caracteres en R base</h2>
+<p>En R, los textos se representan como series de caracteres (character strings). Los caracteres se definen con comillas simples o dobles y pueden ser guardados en objetos de clase “character”. Por ejemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="st">"esto es un texto"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "esto es un texto"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="st">"esto es otro texto"</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "esto es otro texto"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+</div>
+<p>Dentro de los character strings se pueden usar comillar. Si se usa comillas simples, se pueden usar comillas dobles dentro del texto y viceversa. Por ejemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">"El grupo de trabajo de Ecoinformática es el más 'cool' de la AEET"</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "El grupo de trabajo de Ecoinformática es el más 'cool' de la AEET"</code></pre>
+</div>
+</div>
+<p>Se pueden concatenar caracteres con la función <code>paste()</code>, que además permite definir cómo se realiza la concatenación. También la función <code>rep()</code>nos ayuda a repetir elementos de un vector. Por ejemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>name <span class="ot">&lt;-</span> <span class="st">"Mochi"</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>surname <span class="ot">&lt;-</span> <span class="st">"Condatos"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(name, surname)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mochi Condatos"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(name, surname, <span class="at">sep =</span> <span class="st">"_"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mochi_Condatos"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(name, surname)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "MochiCondatos"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="fu">rep</span>(name, <span class="dv">4</span>), <span class="at">collapse =</span> <span class="st">''</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "MochiMochiMochiMochi"</code></pre>
+</div>
+</div>
+<p>Distintas funciones nos pueden ayudar a visibililzar los caracteres:</p>
+<ul>
+<li><p><code>print()</code> nos permite imprimir el contenido de un objeto.</p></li>
+<li><p><code>noquote()</code> nos permite imprimir el contenido de un objeto sin comillas.</p></li>
+<li><p><code>cat()</code> concatena e imprime y también nos permite definir cómo se imprime el contenido de un objeto.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>name <span class="ot">&lt;-</span> <span class="st">"Mochi"</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>surname <span class="ot">&lt;-</span> <span class="st">"Condatos"</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>scientist <span class="ot">&lt;-</span> <span class="fu">paste</span>(name, surname)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(scientist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mochi Condatos"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">noquote</span>(scientist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Mochi Condatos</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(letters, <span class="at">sep =</span> <span class="st">"-"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>a-b-c-d-e-f-g-h-i-j-k-l-m-n-o-p-q-r-s-t-u-v-w-x-y-z</code></pre>
+</div>
+</div>
+<p>Se puede contar el número de elementos que tiene un objeto string con la función <code>length()</code>.</p>
+<p>La función <code>nchar()</code> nos da el número de caracteres de un string.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(scientist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(letters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 26</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(scientist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 14</code></pre>
+</div>
+</div>
+<p>Los caracteres se pueden convertir en mayúsculas o minúsculas con las funciones <code>toupper()</code> y <code>tolower()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">toupper</span>(scientist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "MOCHI CONDATOS"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tolower</span>(scientist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "mochi condatos"</code></pre>
+</div>
+</div>
+<p>Para reemplazar alguno de los caracteres de un string, se puede usar la función <code>chartr()</code>. Por ejemplo, para reemplazar las vocales con tilde por vocales sin tilde:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">"Mochi es el mejor pERRo para aprender a programar."</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chartr</span>(<span class="at">old =</span> <span class="st">"ERR"</span>, <span class="at">new =</span> <span class="st">"err"</span>, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mochi es el mejor perro para aprender a programar."</code></pre>
+</div>
+</div>
+<p>Para extraer partes de un string, se puede usar la función <code>substr()</code>. Por ejemplo, para extraer los primeros 5 caracteres de un string:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">substr</span>(x, <span class="at">start =</span> <span class="dv">1</span>, <span class="at">stop =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mochi"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">substr</span>(x, <span class="at">start =</span> <span class="dv">18</span>, <span class="at">stop =</span> <span class="dv">23</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] " pERRo"</code></pre>
+</div>
+</div>
+<p>También se puede separar un string en partes más pequeñas con la función <code>strsplit()</code>. Por ejemplo, para separar las palabras de una frase:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">"Mochi es el mejor perro para aprender a programar."</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(x, <span class="at">split =</span> <span class="st">" "</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "Mochi"      "es"         "el"         "mejor"      "perro"     
+[6] "para"       "aprender"   "a"          "programar."</code></pre>
+</div>
+</div>
+<p>También podemos identificar patrones de caracteres con la función <code>grep()</code>. Por ejemplo, para identificar las palabras que contienen la letra “o”, las que empiezan por “M” o las que terminan en “r”:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Mochi"</span>, <span class="st">"es"</span>, <span class="st">"el"</span>, <span class="st">"mejor"</span>, <span class="st">"perro"</span>, <span class="st">"para"</span>, <span class="st">"aprender"</span>, <span class="st">"a"</span>, <span class="st">"programar"</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">"o"</span>, z, <span class="at">value=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mochi"     "mejor"     "perro"     "programar"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">"o"</span>, z)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE  TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">"^M"</span>, z, <span class="at">value=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mochi"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">"r$"</span>, z, <span class="at">value=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "mejor"     "aprender"  "programar"</code></pre>
+</div>
+</div>
+<p>Para especificar la posicion en un string hay que usar expresiones regulares, por ejemplo “^” para caracteres al principio y “$” para caracteres al final. Por tanto, algunos caracteres son usados como metacaracteres con un significado especial en las expresiones regulares. El punto (.), el asterisco (*), el signo de interrogación (?), el signo más (+), el signo de intercalación (^), el signo del dólar ($), los corchetes ([, ]), las llaves ({, }), el guión (-), entre otros, tienen un significado no literal. Puedes consultar más información por ejemplo aquí</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>?regex</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>o aqui <a href="https://uc-r.github.io/regex#regex_functions_base" class="uri">https://uc-r.github.io/regex#regex_functions_base</a>.</p>
+<p>En mi opinión, las expresiones regulares y los metacaracteres son una de las dificultades que nos encontramos a la hora de trabajar con caracteres en R base. Algunas funcionalizades de los paquetes “tidy” simplifican el trabajo con expresiones regulares, como veremos más adelante.</p>
+<p>Para modificar el contenido de un string, se pueden usar las funciones <code>sub()</code> y <code>gsub()</code>. La función <code>sub()</code> reemplaza la primera ocurrencia de un patrón en un string, mientras que <code>gsub()</code> reemplaza todas las ocurrencias de un patrón en un string. Por ejemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>texto <span class="ot">&lt;-</span> <span class="st">"El grupo de trabajo de Ecoinformática de la Asociación Española de Ecología Terrestre pretende fomentar el intercambio de experiencias y conocimientos sobre cualquier aspecto relacionado con la ecoinformática, además de contribuir a la formación de los nuevos ecólogos en buenas prácticas y técnicas de computación que les permitan desarrollar al máximo sus proyectos de investigación."</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>texto</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "El grupo de trabajo de Ecoinformática de la Asociación Española de Ecología Terrestre pretende fomentar el intercambio de experiencias y conocimientos sobre cualquier aspecto relacionado con la ecoinformática, además de contribuir a la formación de los nuevos ecólogos en buenas prácticas y técnicas de computación que les permitan desarrollar al máximo sus proyectos de investigación."</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>nuevo_texto <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Asociación Española de Ecología Terrestre"</span>, <span class="st">"AEET"</span>, texto)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>nuevo_texto</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "El grupo de trabajo de Ecoinformática de la AEET pretende fomentar el intercambio de experiencias y conocimientos sobre cualquier aspecto relacionado con la ecoinformática, además de contribuir a la formación de los nuevos ecólogos en buenas prácticas y técnicas de computación que les permitan desarrollar al máximo sus proyectos de investigación."</code></pre>
+</div>
+</div>
+<p>R base tiene una serie de funciones muy útiles para comparar dos vectores de caracteres.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'gt' was built under R version 4.4.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear data frame con la información</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>set_operations <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Function =</span> <span class="fu">c</span>(<span class="st">"union()"</span>, <span class="st">"intersect()"</span>, <span class="st">"setdiff()"</span>, <span class="st">"setequal()"</span>, <span class="st">"identical()"</span>, </span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>               <span class="st">"is.element()"</span>, <span class="st">"%in%()"</span>, <span class="st">"sort()"</span>),</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Description =</span> <span class="fu">c</span>(<span class="st">"set union"</span>, <span class="st">"intersection"</span>, <span class="st">"set difference"</span>, <span class="st">"equal sets"</span>, <span class="st">"exact equality"</span>,</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"is element"</span>, <span class="st">"contains"</span>, <span class="st">"sorting"</span>)</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>set_operations <span class="sc">|&gt;</span> </span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Set Operations in R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="wttiqpvxce" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wttiqpvxce table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#wttiqpvxce thead, #wttiqpvxce tbody, #wttiqpvxce tfoot, #wttiqpvxce tr, #wttiqpvxce td, #wttiqpvxce th {
+  border-style: none;
+}
+
+#wttiqpvxce p {
+  margin: 0;
+  padding: 0;
+}
+
+#wttiqpvxce .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#wttiqpvxce .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#wttiqpvxce .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#wttiqpvxce .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#wttiqpvxce .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wttiqpvxce .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wttiqpvxce .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wttiqpvxce .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#wttiqpvxce .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#wttiqpvxce .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#wttiqpvxce .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#wttiqpvxce .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#wttiqpvxce .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#wttiqpvxce .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#wttiqpvxce .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#wttiqpvxce .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#wttiqpvxce .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#wttiqpvxce .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#wttiqpvxce .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wttiqpvxce .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#wttiqpvxce .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#wttiqpvxce .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#wttiqpvxce .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wttiqpvxce .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#wttiqpvxce .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#wttiqpvxce .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wttiqpvxce .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wttiqpvxce .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#wttiqpvxce .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wttiqpvxce .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#wttiqpvxce .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wttiqpvxce .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wttiqpvxce .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wttiqpvxce .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wttiqpvxce .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wttiqpvxce .gt_left {
+  text-align: left;
+}
+
+#wttiqpvxce .gt_center {
+  text-align: center;
+}
+
+#wttiqpvxce .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#wttiqpvxce .gt_font_normal {
+  font-weight: normal;
+}
+
+#wttiqpvxce .gt_font_bold {
+  font-weight: bold;
+}
+
+#wttiqpvxce .gt_font_italic {
+  font-style: italic;
+}
+
+#wttiqpvxce .gt_super {
+  font-size: 65%;
+}
+
+#wttiqpvxce .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#wttiqpvxce .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#wttiqpvxce .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#wttiqpvxce .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#wttiqpvxce .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#wttiqpvxce .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#wttiqpvxce .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#wttiqpvxce .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#wttiqpvxce div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_heading">
+<th colspan="2" class="gt_heading gt_title gt_font_normal gt_bottom_border">Set Operations in R</th>
+</tr>
+<tr class="odd gt_col_headings">
+<th id="Function" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Function</th>
+<th id="Description" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Description</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Function">union()</td>
+<td class="gt_row gt_left" headers="Description">set union</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Function">intersect()</td>
+<td class="gt_row gt_left" headers="Description">intersection</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Function">setdiff()</td>
+<td class="gt_row gt_left" headers="Description">set difference</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Function">setequal()</td>
+<td class="gt_row gt_left" headers="Description">equal sets</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Function">identical()</td>
+<td class="gt_row gt_left" headers="Description">exact equality</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Function">is.element()</td>
+<td class="gt_row gt_left" headers="Description">is element</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Function">%in%()</td>
+<td class="gt_row gt_left" headers="Description">contains</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Function">sort()</td>
+<td class="gt_row gt_left" headers="Description">sorting</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Yo uso frecuentemente estas funciones para trabajar con especies y nombres taxonómicos. Por ejemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>species1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Protaetia morio"</span>, <span class="st">"Agrypnus murinus"</span>, <span class="st">"Stenobothrus lineatus"</span>, <span class="st">"Philoscia muscorum"</span>)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>species2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Protaetia morio"</span>, <span class="st">"Tettigonia cantans"</span>, <span class="st">"Stenobothrus lineatus"</span>, <span class="st">"Mangora acalypha"</span>)</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="fu">union</span>(species1, species2) <span class="co">#todas las especies únicas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Protaetia morio"       "Agrypnus murinus"      "Stenobothrus lineatus"
+[4] "Philoscia muscorum"    "Tettigonia cantans"    "Mangora acalypha"     </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(species1, species2) <span class="co">#especies comunes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Protaetia morio"       "Stenobothrus lineatus"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(species1, species2) <span class="co">#especies en species1 pero no en species2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Agrypnus murinus"   "Philoscia muscorum"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(species2, species1) <span class="co">#especies en species2 pero no en species1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Tettigonia cantans" "Mangora acalypha"  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setequal</span>(species1, species2) <span class="co">#son iguales?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>species3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Philoscia muscorum"</span>, <span class="st">"Stenobothrus lineatus"</span>, <span class="st">"Agrypnus murinus"</span>, <span class="st">"Protaetia morio"</span>)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setequal</span>(species1, species3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(species1, species3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.element</span>(<span class="st">"Protaetia morio"</span>, species1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="st">"Protaetia morio"</span> <span class="sc">%in%</span> species1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(species1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Agrypnus murinus"      "Philoscia muscorum"    "Protaetia morio"      
+[4] "Stenobothrus lineatus"</code></pre>
+</div>
+</div>
+<p>Una de mis funciones favoritas para encontrar errores al trabajar con nombres de especies es la función <code>agrep</code> que permite buscar patrones aproximados en un vector de caracteres.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>datos_abejas <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Especie =</span> <span class="fu">c</span>(<span class="st">"Andrena_chrysosceles"</span>, <span class="st">"Lasioglossum_villosulum"</span>, <span class="st">"Bombus_silvarum"</span>,</span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Halictus_tumulorum"</span>, <span class="st">"Apis_mellifera"</span>),</span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Abundancia =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">15</span>, <span class="dv">8</span>, <span class="dv">12</span>, <span class="dv">5</span>)</span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a><span class="fu">agrep</span>(<span class="st">"Bombus_sylvarum"</span>, datos_abejas<span class="sc">$</span>Especie, <span class="at">value =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Bombus_silvarum"</code></pre>
+</div>
+</div>
+</section>
+<section id="paquete-stringr-caracteres-con-filosofía-tidy" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="paquete-stringr-caracteres-con-filosofía-tidy"><span class="header-section-number">1.2</span> Paquete <code>stringr</code>: caracteres con filosofía tidy</h2>
+<p><code>stringr</code> es un paquete desarrollado para manejar caracteres bajo la filosofía tidy, que mejora algunas aplicabilidades como trabajar con NA.</p>
+<p>Existen cuatro familias principales de funciones en stringr:</p>
+<ul>
+<li><p>Manipulación de caracteres: estas funciones permiten manipular caracteres individuales dentro de vectores.</p></li>
+<li><p>Herramientas de espacios en blanco para añadir, eliminar y manipular espacios en blanco.</p></li>
+<li><p>Operaciones sensibles a la localización.</p></li>
+<li><p>Funciones de concordancia de patrones, incluyendo las expresiones regulares.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>scientist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mochi Condatos"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_length</span>(scientist) <span class="co">#equivalente a nchart()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 14</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_sub</span>(scientist, <span class="at">start =</span> <span class="dv">2</span>, <span class="at">end =</span> <span class="sc">-</span><span class="dv">2</span>) <span class="co">#equivalente a substr()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "ochi Condato"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_to_upper</span>(scientist) <span class="co">#equivalente a toupper()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "MOCHI CONDATOS"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_to_lower</span>(scientist) <span class="co">#equivalente a tolower()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "mochi condatos"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>texto <span class="ot">&lt;-</span> <span class="st">"Hola AEET"</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>texto</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Hola AEET"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>nuevo_texto <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(texto, <span class="st">"AEET"</span>, <span class="st">"EcoInformatica "</span>)</span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>nuevo_texto</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Hola EcoInformatica "</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_trim</span>(nuevo_texto) <span class="co">#elimina espacios en blanco al principio y al final</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Hola EcoInformatica"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_split</span>(nuevo_texto, <span class="fu">boundary</span>(<span class="st">"word"</span>)) <span class="co">#separa palabras</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "Hola"           "EcoInformatica"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_split</span>(nuevo_texto, <span class="st">""</span>) <span class="co">#separa caracteres</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+ [1] "H" "o" "l" "a" " " "E" "c" "o" "I" "n" "f" "o" "r" "m" "a" "t" "i" "c" "a"
+[20] " "</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(datos_abejas<span class="sc">$</span>Especie)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Andrena_chrysosceles"    "Lasioglossum_villosulum"
+[3] "Bombus_silvarum"         "Halictus_tumulorum"     
+[5] "Apis_mellifera"         </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_detect</span>(<span class="st">"Apis_mellifera"</span>, datos_abejas<span class="sc">$</span>Especie) <span class="co">#equivalente a grepl()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE FALSE FALSE FALSE  TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace</span>(<span class="st">"Bombus_mellifera"</span>, <span class="st">"Bombus"</span>, <span class="st">"Apis"</span>) <span class="co">#equivalente a gsub()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Apis_mellifera"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>abejorros <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Bombus_silvarum"</span>, <span class="st">"Bombus_terrestris"</span>, <span class="st">"Bombus_pascuorum"</span>, <span class="st">"Bombus_pratorum"</span>, <span class="st">"Bombus_humilis"</span>)</span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str_count</span>(abejorros, <span class="st">"Bombus"</span>) <span class="co">#cuenta el número de veces que aparece un patrón</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 1 1 1 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_locate</span>(abejorros, <span class="st">"Bombus"</span>) <span class="co">#localiza la posición de un patrón</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     start end
+[1,]     1   6
+[2,]     1   6
+[3,]     1   6
+[4,]     1   6
+[5,]     1   6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_match</span>(abejorros, <span class="st">"Bombus"</span>) <span class="co">#devuelve el patrón encontrado</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]    
+[1,] "Bombus"
+[2,] "Bombus"
+[3,] "Bombus"
+[4,] "Bombus"
+[5,] "Bombus"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_split</span>(abejorros, <span class="st">"_"</span>) <span class="co">#equivalente a strsplit()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "Bombus"   "silvarum"
+
+[[2]]
+[1] "Bombus"     "terrestris"
+
+[[3]]
+[1] "Bombus"    "pascuorum"
+
+[[4]]
+[1] "Bombus"   "pratorum"
+
+[[5]]
+[1] "Bombus"  "humilis"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a>poema_espronceda <span class="ot">&lt;-</span> <span class="fu">str_c</span>(<span class="st">"Con diez cañones por banda, viento "</span>,</span>
+<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"en popa a toda vela, no corta el mar, "</span>,</span>
+<span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"sino vuela un velero bergantín: bajel "</span>,</span>
+<span id="cb113-4"><a href="#cb113-4" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"pirata que llaman, por su bravura, "</span>,</span>
+<span id="cb113-5"><a href="#cb113-5" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"el Temido, en todo mar conocido "</span>,</span>
+<span id="cb113-6"><a href="#cb113-6" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"del uno al otro confín."</span>)</span>
+<span id="cb113-7"><a href="#cb113-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-8"><a href="#cb113-8" aria-hidden="true" tabindex="-1"></a>poema_espronceda</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Con diez cañones por banda, viento en popa a toda vela, no corta el mar, sino vuela un velero bergantín: bajel pirata que llaman, por su bravura, el Temido, en todo mar conocido del uno al otro confín."</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_flatten</span>(poema_espronceda) <span class="co">#equivalente a paste()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Con diez cañones por banda, viento en popa a toda vela, no corta el mar, sino vuela un velero bergantín: bajel pirata que llaman, por su bravura, el Temido, en todo mar conocido del uno al otro confín."</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">str_wrap</span>(poema_espronceda, <span class="at">width =</span> <span class="dv">27</span>)) <span class="co">#adapta el texto a un tamaño determinado</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Con diez cañones por banda,
+viento en popa a toda vela,
+no corta el mar, sino vuela
+un velero bergantín: bajel
+pirata que llaman, por su
+bravura, el Temido, en todo
+mar conocido del uno al
+otro confín.</code></pre>
+</div>
+</div>
+<p>Puedes encontrar más información sobre el paquete <code>stringr</code> en la documentación oficial <a href="https://stringr.tidyverse.org/" class="uri">https://stringr.tidyverse.org/</a> y la hoja resumen <a href="https://github.com/rstudio/cheatsheets/blob/main/strings.pdf" class="uri">https://github.com/rstudio/cheatsheets/blob/main/strings.pdf</a>.</p>
+</section>
+<section id="limpieza-automática-de-nombres-taxonómicos-con-gbif" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="limpieza-automática-de-nombres-taxonómicos-con-gbif"><span class="header-section-number">1.3</span> Limpieza automática de nombres taxonómicos con gbif</h2>
+<p>En ecología, es frecuente trabajar con nombres taxonómicos de especies. Estos nombres pueden contener errores tipográficos, abreviaturas, sinónimos, etc. que dificultan su análisis. Aunque es recomendable hacer una limpieza detallada y manual, se puede hacer una aproximación de limpieza automática de nombres taxonómicos con la Taxonomía Base de GBIF <a href="https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c" class="uri">https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c</a> y el paquete <code>rgbif</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ purrr     1.0.2
+✔ forcats   1.0.0     ✔ readr     2.1.5
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgbif)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'rgbif' was built under R version 4.4.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'here' was built under R version 4.4.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>here() starts at C:/Users/velad002/OneDrive/InterRest/TextMining_Seminar/TextAnalysis4Ecology</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="co">#For Bees</span></span>
+<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a><span class="co">#1) Load bee spp names</span></span>
+<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a>df.e <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="fu">here</span>(<span class="st">"data/df.e.csv"</span>), <span class="at">delim =</span> <span class="st">";"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 1052 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ";"
+chr (3): Country, Date, Bee_name
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create poll spp name dataset</span></span>
+<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a>Poll_spp <span class="ot">&lt;-</span> df.e <span class="sc">|&gt;</span> <span class="fu">select</span>(Bee_name) <span class="sc">|&gt;</span>  </span>
+<span id="cb128-3"><a href="#cb128-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span></span>
+<span id="cb128-4"><a href="#cb128-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Bee_name) <span class="sc">|&gt;</span> <span class="fu">pull</span>()</span>
+<span id="cb128-5"><a href="#cb128-5" aria-hidden="true" tabindex="-1"></a>Poll_spp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "Andrena alfkenella"         "Andrena bicolor"           
+  [3] "Andrena chrysosceles"       "Andrena cineraria"         
+  [5] "Andrena dorsata"            "Andrena flavipes"          
+  [7] "Andrena hattorfiana"        "Andrena labialis"          
+  [9] "Andrena labiata"            "Andrena minutula"          
+ [11] "Andrena mynutula"           "Andrena nitida"            
+ [13] "Andrena proxima"            "Anthidium byssinum"        
+ [15] "Anthidium manicatum"        "Anthidium nanum"           
+ [17] "Anthidium punctatum"        "Apis melifera"             
+ [19] "Apis mellifera"             "Apis melllifera"           
+ [21] "Bombus bohemicus"           "Bombus campestris"         
+ [23] "Bombus hortorum"            "Bombus hypnorum"           
+ [25] "Bombus lapidarius"          "Bombus lapydarius"         
+ [27] "Bombus lucorum"             "Bombus pascuorum"          
+ [29] "Bombus pratorum"            "Bombus ruderarius"         
+ [31] "Bombus rupestris"           "Bombus rupestriss"         
+ [33] "Bombus spec"                "Bombus sylvarum"           
+ [35] "Bombus sylvestris"          "Bombus terrestris"         
+ [37] "Bombus vestalis"            "Ceratina cyanea"           
+ [39] "Cerceris quinquefasciata"   "Chelostoma florisomne"     
+ [41] "Coelioxys alata"            "Colletes daviesanus"       
+ [43] "Epeolus variegatus"         "Halictus quadricinctus"    
+ [45] "Halictus rubicundus"        "Halictus scabiosae"        
+ [47] "Halictus simple"            "Halictus simplex"          
+ [49] "Halictus spec"              "Halictus subauratus"       
+ [51] "Halictus tumulorum"         "Hallictus subauratus"      
+ [53] "Hylaeus angustatus"         "Hylaeus brevicornis"       
+ [55] "Hylaeus communis"           "Hylaeus confusus"          
+ [57] "Hylaeus dilatatus"          "Hylaeus nigritus"          
+ [59] "Hylaeus styriacus"          "Lasioglossum aeratum"      
+ [61] "Lasioglossum albipes"       "Lasioglossum calceatum"    
+ [63] "Lasioglossum costulatum"    "Lasioglossum interruptum"  
+ [65] "Lasioglossum laevigatum"    "Lasioglossum laticeps"     
+ [67] "Lasioglossum lativentre"    "Lasioglossum leucopus"     
+ [69] "Lasioglossum leucozonium"   "Lasioglossum lineare"      
+ [71] "Lasioglossum lucidulum"     "Lasioglossum malachurum"   
+ [73] "Lasioglossum morio"         "Lasioglossum nitidiusculum"
+ [75] "Lasioglossum pauxillum"     "Lasioglossum pygmaeum"     
+ [77] "Lasioglossum villosulum"    "Lasioglossum vilosulum"    
+ [79] "Lindenius albilabris"       "Megachile centuncularis"   
+ [81] "Megachile lapponica"        "Megachile maritima"        
+ [83] "Megachile pilidens"         "Megachile versicolor"      
+ [85] "Megachile willughbiella"    "Melitta haemorrhoidalis"   
+ [87] "Nomada emarginata"          "Nomada flavoguttata"       
+ [89] "Osma aurulenta"             "Osmia adunca"              
+ [91] "Osmia aurulenta"            "Osmia campanularum"        
+ [93] "Osmia cantabrica"           "Osmia leucomelana"         
+ [95] "Osmia rapunculi"            "Osmia spinulosa"           
+ [97] "Osmia truncorum"            "Sphecodes crassus"         
+ [99] "Sphecodes gibbus"           "Stelis odontopyga"         
+[101] "Stelis signata"             "Xylocopa violacea"         </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="co">#2) Retrieve GBIF taxonomy</span></span>
+<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a><span class="co">#name_backbone_checklist()</span></span>
+<span id="cb130-3"><a href="#cb130-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Lookup names in the GBIF backbone taxonomy in a checklist.</span></span>
+<span id="cb130-4"><a href="#cb130-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-5"><a href="#cb130-5" aria-hidden="true" tabindex="-1"></a>gbif_names <span class="ot">&lt;-</span> <span class="fu">name_backbone_checklist</span>(<span class="at">name_data =</span> Poll_spp, <span class="at">order =</span> <span class="st">"   Hymenoptera"</span>)</span>
+<span id="cb130-6"><a href="#cb130-6" aria-hidden="true" tabindex="-1"></a>gbif_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 102 × 26
+   usageKey scientificName       canonicalName rank  status confidence matchType
+      &lt;int&gt; &lt;chr&gt;                &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;    
+ 1  1357170 Andrena alfkenella … Andrena alfk… SPEC… ACCEP…        100 EXACT    
+ 2  1356887 Andrena bicolor Fab… Andrena bico… SPEC… ACCEP…        100 EXACT    
+ 3  1358259 Andrena chrysoscele… Andrena chry… SPEC… ACCEP…        100 EXACT    
+ 4  1358088 Andrena cineraria (… Andrena cine… SPEC… ACCEP…        100 EXACT    
+ 5  1357872 Andrena dorsata (Ki… Andrena dors… SPEC… ACCEP…        100 EXACT    
+ 6  1357156 Andrena flavipes Pa… Andrena flav… SPEC… ACCEP…        100 EXACT    
+ 7  1357364 Andrena hattorfiana… Andrena hatt… SPEC… ACCEP…        100 EXACT    
+ 8  1357222 Andrena labialis (K… Andrena labi… SPEC… ACCEP…        100 EXACT    
+ 9  1357207 Andrena labiata Fab… Andrena labi… SPEC… ACCEP…        100 EXACT    
+10  1357013 Andrena minutula (K… Andrena minu… SPEC… ACCEP…        100 EXACT    
+# ℹ 92 more rows
+# ℹ 19 more variables: kingdom &lt;chr&gt;, phylum &lt;chr&gt;, order &lt;chr&gt;, family &lt;chr&gt;,
+#   genus &lt;chr&gt;, species &lt;chr&gt;, kingdomKey &lt;int&gt;, phylumKey &lt;int&gt;,
+#   classKey &lt;int&gt;, orderKey &lt;int&gt;, familyKey &lt;int&gt;, genusKey &lt;int&gt;,
+#   speciesKey &lt;int&gt;, synonym &lt;lgl&gt;, class &lt;chr&gt;, acceptedUsageKey &lt;int&gt;,
+#   verbatim_name &lt;chr&gt;, verbatim_index &lt;dbl&gt;, verbatim_order &lt;chr&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Match and unmatched records</span></span>
+<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a>matched <span class="ot">=</span> gbif_names <span class="sc">|&gt;</span>  <span class="fu">filter</span>(matchType <span class="sc">==</span> <span class="st">"EXACT"</span>) <span class="co">#92 matched</span></span>
+<span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a>matched</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 92 × 26
+   usageKey scientificName       canonicalName rank  status confidence matchType
+      &lt;int&gt; &lt;chr&gt;                &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;    
+ 1  1357170 Andrena alfkenella … Andrena alfk… SPEC… ACCEP…        100 EXACT    
+ 2  1356887 Andrena bicolor Fab… Andrena bico… SPEC… ACCEP…        100 EXACT    
+ 3  1358259 Andrena chrysoscele… Andrena chry… SPEC… ACCEP…        100 EXACT    
+ 4  1358088 Andrena cineraria (… Andrena cine… SPEC… ACCEP…        100 EXACT    
+ 5  1357872 Andrena dorsata (Ki… Andrena dors… SPEC… ACCEP…        100 EXACT    
+ 6  1357156 Andrena flavipes Pa… Andrena flav… SPEC… ACCEP…        100 EXACT    
+ 7  1357364 Andrena hattorfiana… Andrena hatt… SPEC… ACCEP…        100 EXACT    
+ 8  1357222 Andrena labialis (K… Andrena labi… SPEC… ACCEP…        100 EXACT    
+ 9  1357207 Andrena labiata Fab… Andrena labi… SPEC… ACCEP…        100 EXACT    
+10  1357013 Andrena minutula (K… Andrena minu… SPEC… ACCEP…        100 EXACT    
+# ℹ 82 more rows
+# ℹ 19 more variables: kingdom &lt;chr&gt;, phylum &lt;chr&gt;, order &lt;chr&gt;, family &lt;chr&gt;,
+#   genus &lt;chr&gt;, species &lt;chr&gt;, kingdomKey &lt;int&gt;, phylumKey &lt;int&gt;,
+#   classKey &lt;int&gt;, orderKey &lt;int&gt;, familyKey &lt;int&gt;, genusKey &lt;int&gt;,
+#   speciesKey &lt;int&gt;, synonym &lt;lgl&gt;, class &lt;chr&gt;, acceptedUsageKey &lt;int&gt;,
+#   verbatim_name &lt;chr&gt;, verbatim_index &lt;dbl&gt;, verbatim_order &lt;chr&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a>unmatched <span class="ot">=</span> gbif_names <span class="sc">|&gt;</span> <span class="fu">filter</span>(matchType <span class="sc">!=</span> <span class="st">"EXACT"</span>) <span class="co">#10 unmached</span></span>
+<span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>unmatched</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 26
+   usageKey scientificName       canonicalName rank  status confidence matchType
+      &lt;int&gt; &lt;chr&gt;                &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;    
+ 1  1357013 Andrena minutula (K… Andrena minu… SPEC… ACCEP…        100 FUZZY    
+ 2  1341976 Apis mellifera Linn… Apis mellife… SPEC… ACCEP…        100 FUZZY    
+ 3  1341976 Apis mellifera Linn… Apis mellife… SPEC… ACCEP…        100 FUZZY    
+ 4  1340301 Bombus lapidarius (… Bombus lapid… SPEC… ACCEP…        100 FUZZY    
+ 5  1340344 Bombus rupestris (F… Bombus rupes… SPEC… ACCEP…        100 FUZZY    
+ 6  1338466 Coelioxys alatus Fö… Coelioxys al… SPEC… ACCEP…        100 FUZZY    
+ 7  1353310 Halictus simplex Bl… Halictus sim… SPEC… ACCEP…         99 FUZZY    
+ 8  1353234 Halictus subauratus… Halictus sub… SPEC… ACCEP…         93 FUZZY    
+ 9  1354041 Lasioglossum villos… Lasioglossum… SPEC… ACCEP…        100 FUZZY    
+10  5039340 Osmia aurulenta (Pa… Osmia aurule… SPEC… ACCEP…         93 FUZZY    
+# ℹ 19 more variables: kingdom &lt;chr&gt;, phylum &lt;chr&gt;, order &lt;chr&gt;, family &lt;chr&gt;,
+#   genus &lt;chr&gt;, species &lt;chr&gt;, kingdomKey &lt;int&gt;, phylumKey &lt;int&gt;,
+#   classKey &lt;int&gt;, orderKey &lt;int&gt;, familyKey &lt;int&gt;, genusKey &lt;int&gt;,
+#   speciesKey &lt;int&gt;, synonym &lt;lgl&gt;, class &lt;chr&gt;, acceptedUsageKey &lt;int&gt;,
+#   verbatim_name &lt;chr&gt;, verbatim_index &lt;dbl&gt;, verbatim_order &lt;chr&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(unmatched<span class="sc">$</span>matchType)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "FUZZY"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="co">#"FUZZY" because of misspelling   </span></span>
+<span id="cb138-2"><a href="#cb138-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-3"><a href="#cb138-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Checking unmatched names</span></span>
+<span id="cb138-4"><a href="#cb138-4" aria-hidden="true" tabindex="-1"></a>fixing <span class="ot">&lt;-</span> unmatched <span class="sc">|&gt;</span>  <span class="fu">select</span>(scientificName, matchType, verbatim_name)</span>
+<span id="cb138-5"><a href="#cb138-5" aria-hidden="true" tabindex="-1"></a><span class="co">#When it is FUZZY it seems to find the correct name easily</span></span>
+<span id="cb138-6"><a href="#cb138-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Be careful other situations can also happen</span></span>
+<span id="cb138-7"><a href="#cb138-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-8"><a href="#cb138-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating a data.frame that contents old name with typo and new names with corrected scientific name</span></span>
+<span id="cb138-9"><a href="#cb138-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-10"><a href="#cb138-10" aria-hidden="true" tabindex="-1"></a>fixing <span class="ot">&lt;-</span> fixing <span class="sc">|&gt;</span></span>
+<span id="cb138-11"><a href="#cb138-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Bee_name =</span> verbatim_name) <span class="sc">|&gt;</span></span>
+<span id="cb138-12"><a href="#cb138-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sci_name =</span>  <span class="fu">word</span>(scientificName, <span class="dv">1</span>,<span class="dv">2</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb138-13"><a href="#cb138-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(scientificName, matchType))</span>
+<span id="cb138-14"><a href="#cb138-14" aria-hidden="true" tabindex="-1"></a>fixing</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 2
+   Bee_name               sci_name               
+   &lt;chr&gt;                  &lt;chr&gt;                  
+ 1 Andrena mynutula       Andrena minutula       
+ 2 Apis melifera          Apis mellifera         
+ 3 Apis melllifera        Apis mellifera         
+ 4 Bombus lapydarius      Bombus lapidarius      
+ 5 Bombus rupestriss      Bombus rupestris       
+ 6 Coelioxys alata        Coelioxys alatus       
+ 7 Halictus simple        Halictus simplex       
+ 8 Hallictus subauratus   Halictus subauratus    
+ 9 Lasioglossum vilosulum Lasioglossum villosulum
+10 Osma aurulenta         Osmia aurulenta        </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="co">#3) Creating a dataframe with a new column with the Fixed names: Fixed_bee_name</span></span>
+<span id="cb140-2"><a href="#cb140-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-3"><a href="#cb140-3" aria-hidden="true" tabindex="-1"></a>df.e <span class="ot">&lt;-</span> df.e <span class="sc">|&gt;</span></span>
+<span id="cb140-4"><a href="#cb140-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(fixing) <span class="sc">|&gt;</span></span>
+<span id="cb140-5"><a href="#cb140-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Fixed_bee_name =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(sci_name), Bee_name, sci_name)) <span class="sc">|&gt;</span></span>
+<span id="cb140-6"><a href="#cb140-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span> sci_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(Bee_name)`</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a>df.e</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,052 × 4
+   Country Date     Bee_name               Fixed_bee_name         
+   &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;                  &lt;chr&gt;                  
+ 1 Germany 7-6-2022 Coelioxys alata        Coelioxys alatus       
+ 2 Germany 7-6-2022 Andrena chrysosceles   Andrena chrysosceles   
+ 3 Germany 7-6-2022 Bombus lapydarius      Bombus lapidarius      
+ 4 Germany 7-6-2022 Lasioglossum vilosulum Lasioglossum villosulum
+ 5 Germany 7-6-2022 Anthidium byssinum     Anthidium byssinum     
+ 6 Germany 7-6-2022 Bombus lapidarius      Bombus lapidarius      
+ 7 Germany 7-6-2022 Lasioglossum pauxillum Lasioglossum pauxillum 
+ 8 Germany 7-6-2022 Andrena alfkenella     Andrena alfkenella     
+ 9 Germany 7-6-2022 Osma aurulenta         Osmia aurulenta        
+10 Germany 4-8-2022 Bombus lapidarius      Bombus lapidarius      
+# ℹ 1,042 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="leer-pdf-en-r-y-limpiar-textos" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="leer-pdf-en-r-y-limpiar-textos"><span class="header-section-number">1.4</span> Leer pdf en R y limpiar textos</h2>
+<p>La función <code>pdf_data</code> del paquete <code>pdftools</code> permite extraer el texto de un archivo pdf. Sin embargo, si existen fotografías o figuras no siempre es posible extraer el texto de estos o puede haber errores al leer el archivo. En estos casos se puede usar la función <code>pdf_ocr_text</code> para extraer el texto mediante reconocimiento óptico (OCR).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pdftools)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'pdftools' was built under R version 4.4.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Using poppler version 23.08.0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb147-2"><a href="#cb147-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-3"><a href="#cb147-3" aria-hidden="true" tabindex="-1"></a><span class="co">#folder path</span></span>
+<span id="cb147-4"><a href="#cb147-4" aria-hidden="true" tabindex="-1"></a>folder_path <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"texts/"</span>)</span>
+<span id="cb147-5"><a href="#cb147-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-6"><a href="#cb147-6" aria-hidden="true" tabindex="-1"></a><span class="co">#PDF files: Notas Ecoinformáticas + description of Ecoinformatica group</span></span>
+<span id="cb147-7"><a href="#cb147-7" aria-hidden="true" tabindex="-1"></a>pdf_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(folder_path, <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.pdf$"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb147-8"><a href="#cb147-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-9"><a href="#cb147-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Function to extract text from PDFs already in tidyformat </span></span>
+<span id="cb147-10"><a href="#cb147-10" aria-hidden="true" tabindex="-1"></a>read_pdf <span class="ot">&lt;-</span> <span class="cf">function</span>(doc) {</span>
+<span id="cb147-11"><a href="#cb147-11" aria-hidden="true" tabindex="-1"></a>  t <span class="ot">&lt;-</span> <span class="fu">pdf_data</span>(doc) </span>
+<span id="cb147-12"><a href="#cb147-12" aria-hidden="true" tabindex="-1"></a>  pt <span class="ot">&lt;-</span> <span class="fu">map_chr</span>(t, <span class="sc">~</span> .x <span class="sc">|&gt;</span>  <span class="fu">select</span>(text) <span class="sc">|&gt;</span>  <span class="fu">unlist</span>() <span class="sc">|&gt;</span>  <span class="fu">paste0</span>(<span class="at">collapse =</span> <span class="st">" "</span>))</span>
+<span id="cb147-13"><a href="#cb147-13" aria-hidden="true" tabindex="-1"></a>  textocompleto <span class="ot">&lt;-</span> <span class="fu">paste0</span>(pt, <span class="at">collapse =</span> <span class="st">" "</span>)</span>
+<span id="cb147-14"><a href="#cb147-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb147-15"><a href="#cb147-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># If the extracted text is too short, use OCR</span></span>
+<span id="cb147-16"><a href="#cb147-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nchar</span>(textocompleto) <span class="sc">&lt;</span> <span class="dv">15</span>) {</span>
+<span id="cb147-17"><a href="#cb147-17" aria-hidden="true" tabindex="-1"></a>    textocompleto <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">pdf_ocr_text</span>(doc), <span class="at">collapse =</span> <span class="st">" "</span>)</span>
+<span id="cb147-18"><a href="#cb147-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb147-19"><a href="#cb147-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb147-20"><a href="#cb147-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Return a tibble with the document name and extracted text</span></span>
+<span id="cb147-21"><a href="#cb147-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">document =</span> doc, <span class="at">text =</span> textocompleto)</span>
+<span id="cb147-22"><a href="#cb147-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb147-23"><a href="#cb147-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-24"><a href="#cb147-24" aria-hidden="true" tabindex="-1"></a>textos <span class="ot">&lt;-</span> <span class="fu">map</span>(pdf_files, read_pdf)</span>
+<span id="cb147-25"><a href="#cb147-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-26"><a href="#cb147-26" aria-hidden="true" tabindex="-1"></a>textos_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(textos) <span class="sc">|&gt;</span> </span>
+<span id="cb147-27"><a href="#cb147-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">document =</span> <span class="fu">str_replace</span>(document, <span class="at">pattern =</span> <span class="fu">paste0</span>(folder_path, <span class="st">"/"</span>), <span class="at">replacement =</span> <span class="st">""</span>))</span>
+<span id="cb147-28"><a href="#cb147-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-29"><a href="#cb147-29" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(textos_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [18 × 2] (S3: tbl_df/tbl/data.frame)
+ $ document: chr [1:18] "1416-Texto del artículo-5034-1-10-20170426.pdf" "1451-Texto del artículo-5298-1-10-20170801.pdf" "1524-Texto del artículo-5730-3-10-20171212.pdf" "1570-Texto del artículo-5970-1-10-20180421.pdf" ...
+ $ text    : chr [1:18] "AEET ASOCIACIÓN ESPAÑOLA DE ECOLOGÍA TERRESTRE Ecosistemas 26(1): 126-127 [Enero-abril 2017] Doi.: 10.7818/ECOS"| __truncated__ "AEET ASOCIACIÓN ESPAÑOLA DE ECOLOGÍA TERRESTRE ecosistemas Ecosistemas 26(2): 64-66 [Mayo-Agosto 2017] Doi.: 10"| __truncated__ "AEET ASOCIACIÓN ESPAÑOLA DE ECOLOGÍA TERRESTRE Ecosistemas 26(3): 110-111 [Septiembre-Diciembre 2017] Doi.: 10."| __truncated__ "AEET ASOCIACIÓN ESPAÑOLA DE ECOLOGÍA TERRESTRE Ecosistemas 27(1): 128-129 [Enero-Abril 2018] Doi.: 10.7818/ECOS"| __truncated__ ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(textos_df<span class="sc">$</span>document)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "1416-Texto del artículo-5034-1-10-20170426.pdf" 
+ [2] "1451-Texto del artículo-5298-1-10-20170801.pdf" 
+ [3] "1524-Texto del artículo-5730-3-10-20171212.pdf" 
+ [4] "1570-Texto del artículo-5970-1-10-20180421.pdf" 
+ [5] "1591-Texto del artículo-6177-1-10-20180729.pdf" 
+ [6] "1604-Texto del artículo-6174-1-10-20180729.pdf" 
+ [7] "1699-Texto del artículo-6714-1-10-20190508.pdf" 
+ [8] "1838-Texto del artículo-7395-1-10-20191228.pdf" 
+ [9] "1880-Texto del artículo-7465-1-10-20200114.pdf" 
+[10] "1948-Texto del artículo-7770-1-10-20200424.pdf" 
+[11] "1995-Texto del artículo-8172-1-10-20200720.pdf" 
+[12] "2129-Texto del artículo-8660-1-10-20201228.pdf" 
+[13] "2256-Texto del artículo-10468-1-10-20210709.pdf"
+[14] "2332-Texto del artículo-11367-1-10-20220420.pdf"
+[15] "2527-Texto del artículo-12698-1-10-20230411.pdf"
+[16] "2745-Texto del artículo-14476-9-10-20241126.pdf"
+[17] "2797-Texto del artículo-14383-3-10-20240709.pdf"
+[18] "Ecoinformática-AEET.pdf"                        </code></pre>
+</div>
+</div>
+</section>
+<section id="limpieza-de-textos" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="limpieza-de-textos"><span class="header-section-number">1.5</span> Limpieza de textos</h2>
+<p>El análisis de textos suele requerir un trabajo previo de limpieza de caracteres y palabras. Cuestiones simples como el uso de mayúsculas y minúsculas, fechas, horas y otros números, signos de puntuación, etc. pueden limitar la capacidad del procesamiento de datos por parte de los ordenadores y sesgar el análisis de textos. Por ello, los textos suelen requerir un proceso de normalización antes de ser procesados.</p>
+<p>Dos puntos claves a tener en cuenta a la hora de analizar textos en la limpieza de textos son la eliminación de palabras vacías (stop words) y la normalización de palabras.</p>
+<p>En los lenguajes naturales hay una serie de palabras que no aportan significado al texto, como preposiciones, conjunciones, artículos, etc, pero que suelen aparecer muy frecuentemente. Estas palabras se conocen como palabras vacías (stop words). No hay una lista definitiva de palabras vacías, pero distintos paquetes ofrecen propuestas de palabras vacías para hacer filtrado de las mismas. En R, el paquete <code>tidytext</code> tiene una lista de palabras vacías en inglés que se pueden usar para eliminarlas de los textos. En español, el paquete <code>tm</code> tiene una lista de palabras vacías en castellano que se pueden usar para eliminarlas de los textos.</p>
+<p>Además, en el lenguaje muy frecuentemente utilizamos conjuntos de palabras, combinaciones léxicas, que suelen ir juntas en el lenguaje natural y tienen un significado conjunto, como por ejemplo “análisis estadístico” y que su análisis debería hacerse preferencialmente de manera conjunta.</p>
+<p>Existen otros aspectos de este tipo a tener en cuenta antes de realizar análisis de texto, pero que yo no voy a ahondar en ellos en este seminario. Un ejemplo es la lematización (<em>stemming</em>) que consiste en reducir las palabras a su raíz o lema, de manera que se evita la duplicación devido a plurales, la conjugación de verbos, palabras derivadas, etc..</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(textclean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'textclean' was built under R version 4.4.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidytext' was built under R version 4.4.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tm' was built under R version 4.4.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: NLP</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'NLP' was built under R version 4.4.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'NLP'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:ggplot2':
+
+    annotate</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a>stop_words_es <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(stop_words,</span>
+<span id="cb161-2"><a href="#cb161-2" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">tibble</span>(<span class="at">word =</span> tm<span class="sc">::</span><span class="fu">stopwords</span>(<span class="st">"spanish"</span>),</span>
+<span id="cb161-3"><a href="#cb161-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">lexicon =</span> <span class="st">"custom"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb161-4"><a href="#cb161-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(lexicon <span class="sc">==</span> <span class="st">"custom"</span>)</span>
+<span id="cb161-5"><a href="#cb161-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb161-6"><a href="#cb161-6" aria-hidden="true" tabindex="-1"></a>word_c <span class="ot">&lt;-</span> textos_df <span class="sc">|&gt;</span> </span>
+<span id="cb161-7"><a href="#cb161-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(text) <span class="sc">|&gt;</span> </span>
+<span id="cb161-8"><a href="#cb161-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">18</span>) <span class="sc">|&gt;</span></span>
+<span id="cb161-9"><a href="#cb161-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_lower</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb161-10"><a href="#cb161-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_date</span>(<span class="at">replacement =</span> <span class="st">""</span>) <span class="sc">|&gt;</span> <span class="co"># remove dates</span></span>
+<span id="cb161-11"><a href="#cb161-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_time</span>(<span class="at">replacement =</span> <span class="st">""</span>) <span class="sc">|&gt;</span> <span class="co"># remove time</span></span>
+<span id="cb161-12"><a href="#cb161-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_remove_all</span>(<span class="at">pattern =</span> <span class="st">"[[:punct:]]"</span>) <span class="sc">|&gt;</span> <span class="co"># remove punctuation</span></span>
+<span id="cb161-13"><a href="#cb161-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_remove_all</span>(<span class="at">pattern =</span> <span class="st">"[^</span><span class="sc">\\</span><span class="st">s]*[0-9][^</span><span class="sc">\\</span><span class="st">s]*"</span>) <span class="sc">|&gt;</span>  <span class="co"># remove mixed string n number</span></span>
+<span id="cb161-14"><a href="#cb161-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_contraction</span>() <span class="sc">|&gt;</span>  <span class="co"># replace contraction to their multi-word forms</span></span>
+<span id="cb161-15"><a href="#cb161-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_word_elongation</span>() <span class="sc">|&gt;</span>  <span class="co"># replace informal writing with known semantic replacements</span></span>
+<span id="cb161-16"><a href="#cb161-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_squish</span>() <span class="sc">|&gt;</span>  <span class="co"># reduces repeated whitespace inside a string</span></span>
+<span id="cb161-17"><a href="#cb161-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_trim</span>() <span class="sc">|&gt;</span>  <span class="co"># removes whitespace from start and end of string</span></span>
+<span id="cb161-18"><a href="#cb161-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"análisis estadístico"</span>, <span class="st">"análisis_estadístico"</span>) <span class="sc">|&gt;</span> <span class="co">#avoiding collocations</span></span>
+<span id="cb161-19"><a href="#cb161-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"proyectos de investigación"</span>, <span class="st">"proyectos"</span>) <span class="sc">|&gt;</span> <span class="co">#avoiding collocations</span></span>
+<span id="cb161-20"><a href="#cb161-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"bases de datos"</span>, <span class="st">"bases_datos"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb161-21"><a href="#cb161-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"grupo de trabajo"</span>, <span class="st">"grupo_trabajo"</span>) <span class="sc">|&gt;</span> <span class="co">#avoiding collocations</span></span>
+<span id="cb161-22"><a href="#cb161-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"asociación española de ecología terrestre"</span>, <span class="st">"AEET"</span>) <span class="sc">|&gt;</span>  <span class="co">#avoiding collocations</span></span>
+<span id="cb161-23"><a href="#cb161-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_split</span>(<span class="fu">boundary</span>(<span class="st">"word"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb161-24"><a href="#cb161-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
+<span id="cb161-25"><a href="#cb161-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">value =</span> .) <span class="sc">|&gt;</span></span>
+<span id="cb161-26"><a href="#cb161-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">word =</span> value) <span class="sc">|&gt;</span></span>
+<span id="cb161-27"><a href="#cb161-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(stop_words_es) <span class="sc">|&gt;</span>  <span class="co"># remove stop words</span></span>
+<span id="cb161-28"><a href="#cb161-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(word, <span class="st">"^http"</span>))  <span class="sc">|&gt;</span>  <span class="co">#removes webpages</span></span>
+<span id="cb161-29"><a href="#cb161-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(word, <span class="st">"^www"</span>))  <span class="sc">|&gt;</span>  <span class="co">#removes webpages</span></span>
+<span id="cb161-30"><a href="#cb161-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(word, <span class="st">"^doi"</span>)) <span class="sc">|&gt;</span> <span class="co">#removes bibliographic repetitions</span></span>
+<span id="cb161-31"><a href="#cb161-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(word, <span class="st">"^pp"</span>)) <span class="sc">|&gt;</span>  <span class="co">#removes bibliographic repetitions</span></span>
+<span id="cb161-32"><a href="#cb161-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(word, <span class="st">"^al"</span>)) <span class="sc">|&gt;</span>  <span class="co">#removes bibliographic repetitions</span></span>
+<span id="cb161-33"><a href="#cb161-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb161-34"><a href="#cb161-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(word) <span class="sc">|&gt;</span> </span>
+<span id="cb161-35"><a href="#cb161-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">countWords =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb161-36"><a href="#cb161-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(countWords))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(word)`</code></pre>
+</div>
+</div>
+</section>
+<section id="análisis-de-textos-frecuencia-y-nubes-de-palabras" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="análisis-de-textos-frecuencia-y-nubes-de-palabras"><span class="header-section-number">1.6</span> Análisis de textos: Frecuencia y nubes de palabras</h2>
+<p>Una cuestión central en el análisis de textos es cómo cuantificar de qué trata un documento. Una de las formas más directas y simples es contar las palabras que aparecen en el texto. Las nubes de palabras sirven para visualizar las palabras más frecuentes en un texto de manera sencilla. En R, el paquete <code>ggwordcloud</code> permite hacer nubes de palabras de forma sencilla. Existen otros paquetes que permiten hacer nubes de palabras, como <code>wordcloud2</code>. Puedes consultar estos recursos para más información: <a href="https://r-graph-gallery.com/wordcloud.html" class="uri">https://r-graph-gallery.com/wordcloud.html</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb163"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggwordcloud)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggwordcloud' was built under R version 4.4.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb165"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1" aria-hidden="true" tabindex="-1"></a>word_c <span class="sc">|&gt;</span></span>
+<span id="cb165-2"><a href="#cb165-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(<span class="at">label =</span> word, <span class="at">size =</span> countWords)) <span class="sc">+</span></span>
+<span id="cb165-3"><a href="#cb165-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_wordcloud</span>() <span class="sc">+</span></span>
+<span id="cb165-4"><a href="#cb165-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Seminario_AnalisisTextosEcologia_files/figure-html/nubes%20palabras-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>En este tutorial explican como mejorar la estética y composición de las nubes de palabras: <a href="https://cran.r-project.org/web/packages/ggwordcloud/vignettes/ggwordcloud.html" class="uri">https://cran.r-project.org/web/packages/ggwordcloud/vignettes/ggwordcloud.html</a>.</p>
+<p>Otros análisis basados en la frecuencia de palabras son usados para derivar la importancia de las palabras en un conjunto de textos. Puedes echar un vistazo a este tutorial <a href="https://www.tidytextmining.com/tfidf" class="uri">https://www.tidytextmining.com/tfidf</a></p>
+</section>
+<section id="análisis-de-textos-relación-entre-palabras" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="análisis-de-textos-relación-entre-palabras"><span class="header-section-number">1.7</span> Análisis de textos: Relación entre palabras</h2>
+<p>En el análisis de textos es común que queramos analizar una colección de textos relacionados entre sí (por ejemplo todos los textos de un mismo autor, o todos los artículos resultantes de una misma búsqueda de palabras clave). El conjunto de textos conforman el <em>corpus</em>. Los textos, a su vez, pueden dividirse en unidades más pequeñas de interés para el análisis, como por ejemplo párrafos, oraciones o palabras. Estas unidades se conocen como <em>tokens</em>.</p>
+<p>El paquete <code>tidytext</code> permite facilita la <em>tokenización</em> del corpus.</p>
+<p>Es común que para el análisis de textos se construyan matrices de términos-documentos, donde las filas representan los términos y las columnas los documentos, parecidas a las matrices de presencias y ausencias que utilizamos en ecología. Sin embargo, en la filosofía tidy se mantendría la estructura de un <em>toke</em> por fila.</p>
+<p>Existen diversas metodologías y marcos teóricos a la hora de hacer análisis de textos. Entre ellas, el estudio de la relación entre palabras es una de las más comunes. En esta aproximación se examina qué palabras tienden a seguir a otras inmediatamente, o qué palabras tienden a co-ocurrir dentro de los mismos documentos. En este segundo análisis me voy a centrar en este seminario.</p>
+<p>Existen otras muchas formas de analizar textos como por ejemplo a través del análisis de sentimientos, la clasificación de textos, modelización de temas, etc. Aquí podéis encontrar más información sobre el análisis de textos en R: <a href="https://guides.library.upenn.edu/penntdm/r" class="uri">https://guides.library.upenn.edu/penntdm/r</a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb166"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb166-1"><a href="#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext) <span class="co">#text miny under tidy philosophy</span></span>
+<span id="cb166-2"><a href="#cb166-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(widyr) <span class="co">#widen, process &amp; re-tidy data (calculates paiwise correlations and distance)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'widyr' was built under R version 4.4.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb168"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb168-1"><a href="#cb168-1" aria-hidden="true" tabindex="-1"></a>clean_text_R_corr_20 <span class="ot">&lt;-</span> <span class="cf">function</span>(text) {</span>
+<span id="cb168-2"><a href="#cb168-2" aria-hidden="true" tabindex="-1"></a>  corpus <span class="ot">&lt;-</span> text <span class="sc">|&gt;</span>  </span>
+<span id="cb168-3"><a href="#cb168-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_lower</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb168-4"><a href="#cb168-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_date</span>(<span class="at">replacement =</span> <span class="st">""</span>) <span class="sc">|&gt;</span> <span class="co"># remove dates</span></span>
+<span id="cb168-5"><a href="#cb168-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_time</span>(<span class="at">replacement =</span> <span class="st">""</span>) <span class="sc">|&gt;</span> <span class="co"># remove time</span></span>
+<span id="cb168-6"><a href="#cb168-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_remove_all</span>(<span class="at">pattern =</span> <span class="st">"[[:punct:]]"</span>) <span class="sc">|&gt;</span> <span class="co"># remove punctuation</span></span>
+<span id="cb168-7"><a href="#cb168-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_remove_all</span>(<span class="at">pattern =</span> <span class="st">"[^</span><span class="sc">\\</span><span class="st">s]*[0-9][^</span><span class="sc">\\</span><span class="st">s]*"</span>) <span class="sc">|&gt;</span>  <span class="co"># remove mixed string n number</span></span>
+<span id="cb168-8"><a href="#cb168-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_contraction</span>() <span class="sc">|&gt;</span>  <span class="co"># replace contraction to their multi-word forms</span></span>
+<span id="cb168-9"><a href="#cb168-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_word_elongation</span>() <span class="sc">|&gt;</span>  <span class="co"># replace informal writing with known semantic replacements</span></span>
+<span id="cb168-10"><a href="#cb168-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_squish</span>() <span class="sc">|&gt;</span>  <span class="co"># reduces repeated whitespace inside a string</span></span>
+<span id="cb168-11"><a href="#cb168-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_trim</span>() <span class="sc">|&gt;</span>  <span class="co"># removes whitespace from start and end of string</span></span>
+<span id="cb168-12"><a href="#cb168-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"análisis estadístico"</span>, <span class="st">"análisis_estadístico"</span>) <span class="sc">|&gt;</span> <span class="co">#avoiding collocations</span></span>
+<span id="cb168-13"><a href="#cb168-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"proyectos de investigación"</span>, <span class="st">"proyectos"</span>) <span class="sc">|&gt;</span> <span class="co">#avoiding collocations</span></span>
+<span id="cb168-14"><a href="#cb168-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"bases de datos"</span>, <span class="st">"bases_datos"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb168-15"><a href="#cb168-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"buenas prácticas"</span>, <span class="st">"buenas_prácticas"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb168-16"><a href="#cb168-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"grupo de trabajo"</span>, <span class="st">"grupo_trabajo"</span>) <span class="sc">|&gt;</span> <span class="co">#avoiding collocations</span></span>
+<span id="cb168-17"><a href="#cb168-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"asociación española de ecología terrestre"</span>, <span class="st">"AEET"</span>) <span class="sc">|&gt;</span>  <span class="co">#avoiding collocations</span></span>
+<span id="cb168-18"><a href="#cb168-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_remove_all</span>(<span class="at">pattern =</span> <span class="st">"^http*"</span>) <span class="sc">|&gt;</span>  <span class="co">#not working ¿?</span></span>
+<span id="cb168-19"><a href="#cb168-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_remove_all</span>(<span class="at">pattern =</span> <span class="st">"^www*"</span>) <span class="sc">|&gt;</span>  <span class="co"># remove webpages</span></span>
+<span id="cb168-20"><a href="#cb168-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">value =</span> .) <span class="sc">|&gt;</span></span>
+<span id="cb168-21"><a href="#cb168-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">text =</span> value) </span>
+<span id="cb168-22"><a href="#cb168-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb168-23"><a href="#cb168-23" aria-hidden="true" tabindex="-1"></a>  unigram_probs <span class="ot">&lt;-</span> corpus <span class="sc">|&gt;</span> </span>
+<span id="cb168-24"><a href="#cb168-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text, <span class="at">strip_numeric =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb168-25"><a href="#cb168-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb168-26"><a href="#cb168-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n))</span>
+<span id="cb168-27"><a href="#cb168-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-28"><a href="#cb168-28" aria-hidden="true" tabindex="-1"></a>tidy_skipgrams <span class="ot">&lt;-</span> corpus <span class="sc">|&gt;</span> </span>
+<span id="cb168-29"><a href="#cb168-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(ngram, text, <span class="at">token =</span> <span class="st">"ngrams"</span>, <span class="at">n =</span> <span class="dv">20</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb168-30"><a href="#cb168-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ngramID =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span>  </span>
+<span id="cb168-31"><a href="#cb168-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, ngram)</span>
+<span id="cb168-32"><a href="#cb168-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-33"><a href="#cb168-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-34"><a href="#cb168-34" aria-hidden="true" tabindex="-1"></a>skipgram_probs <span class="ot">&lt;-</span> tidy_skipgrams <span class="sc">|&gt;</span> </span>
+<span id="cb168-35"><a href="#cb168-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairwise_count</span>(word, ngramID, <span class="at">diag =</span> <span class="cn">TRUE</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span>  <span class="co">#Count the number of times each pair of items appear together within a group defined by "feature."</span></span>
+<span id="cb168-36"><a href="#cb168-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n))</span>
+<span id="cb168-37"><a href="#cb168-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-38"><a href="#cb168-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-39"><a href="#cb168-39" aria-hidden="true" tabindex="-1"></a>normalized_prob <span class="ot">&lt;-</span> skipgram_probs <span class="sc">%&gt;%</span></span>
+<span id="cb168-40"><a href="#cb168-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb168-41"><a href="#cb168-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">word1 =</span> item1, <span class="at">word2 =</span> item2) <span class="sc">%&gt;%</span></span>
+<span id="cb168-42"><a href="#cb168-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(unigram_probs <span class="sc">%&gt;%</span></span>
+<span id="cb168-43"><a href="#cb168-43" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">word1 =</span> word, <span class="at">p1 =</span> p),</span>
+<span id="cb168-44"><a href="#cb168-44" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">"word1"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb168-45"><a href="#cb168-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(unigram_probs <span class="sc">%&gt;%</span></span>
+<span id="cb168-46"><a href="#cb168-46" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="at">word2 =</span> word, <span class="at">p2 =</span> p),</span>
+<span id="cb168-47"><a href="#cb168-47" aria-hidden="true" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">"word2"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb168-48"><a href="#cb168-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p_together =</span> p <span class="sc">/</span> p1 <span class="sc">/</span> p2)</span>
+<span id="cb168-49"><a href="#cb168-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-50"><a href="#cb168-50" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> normalized_prob <span class="sc">%&gt;%</span> </span>
+<span id="cb168-51"><a href="#cb168-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(word1 <span class="sc">==</span> <span class="st">"ecoinformática"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb168-52"><a href="#cb168-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word1 <span class="sc">%in%</span> stop_words_es<span class="sc">$</span>word) <span class="sc">%&gt;%</span></span>
+<span id="cb168-53"><a href="#cb168-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word2 <span class="sc">%in%</span> stop_words_es<span class="sc">$</span>word) <span class="sc">%&gt;%</span></span>
+<span id="cb168-54"><a href="#cb168-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>p_together)</span>
+<span id="cb168-55"><a href="#cb168-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-56"><a href="#cb168-56" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span>(output)</span>
+<span id="cb168-57"><a href="#cb168-57" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb168-58"><a href="#cb168-58" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb168-59"><a href="#cb168-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-60"><a href="#cb168-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-61"><a href="#cb168-61" aria-hidden="true" tabindex="-1"></a>textos_df_clean <span class="ot">&lt;-</span> textos_df <span class="sc">|&gt;</span></span>
+<span id="cb168-62"><a href="#cb168-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">r_corr_gram =</span> <span class="fu">map</span>(text, clean_text_R_corr_20))</span>
+<span id="cb168-63"><a href="#cb168-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-64"><a href="#cb168-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-65"><a href="#cb168-65" aria-hidden="true" tabindex="-1"></a>textos_df_clean <span class="sc">|&gt;</span></span>
+<span id="cb168-66"><a href="#cb168-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(r_corr_gram) <span class="sc">|&gt;</span></span>
+<span id="cb168-67"><a href="#cb168-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(document, word2, p_together)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 22 × 3
+   document                                        word2          p_together
+   &lt;chr&gt;                                           &lt;chr&gt;               &lt;dbl&gt;
+ 1 1570-Texto del artículo-5970-1-10-20180421.pdf  ecoinformática      25.7 
+ 2 1570-Texto del artículo-5970-1-10-20180421.pdf  grupo_trabajo       23.1 
+ 3 1570-Texto del artículo-5970-1-10-20180421.pdf  iavs                18.0 
+ 4 2256-Texto del artículo-10468-1-10-20210709.pdf ecoinformática      67.9 
+ 5 2256-Texto del artículo-10468-1-10-20210709.pdf nota                21.5 
+ 6 2256-Texto del artículo-10468-1-10-20210709.pdf cienciometría        8.48
+ 7 2332-Texto del artículo-11367-1-10-20220420.pdf ecoinformática      63.0 
+ 8 2527-Texto del artículo-12698-1-10-20230411.pdf ecoinformática     201.  
+ 9 2745-Texto del artículo-14476-9-10-20241126.pdf ecoinformática      60.1 
+10 2745-Texto del artículo-14476-9-10-20241126.pdf verónica            41.1 
+# ℹ 12 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb170"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb170-1"><a href="#cb170-1" aria-hidden="true" tabindex="-1"></a>textos_df_clean <span class="sc">|&gt;</span></span>
+<span id="cb170-2"><a href="#cb170-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(r_corr_gram) <span class="sc">|&gt;</span></span>
+<span id="cb170-3"><a href="#cb170-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(document, word2, p_together) <span class="sc">|&gt;</span> </span>
+<span id="cb170-4"><a href="#cb170-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word2 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"ecoinformática"</span>, <span class="st">"verónica"</span>, <span class="st">"cruzalonso"</span>, <span class="st">"cualquier"</span>))<span class="sc">|&gt;</span></span>
+<span id="cb170-5"><a href="#cb170-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>( word2, p_together) <span class="sc">|&gt;</span> </span>
+<span id="cb170-6"><a href="#cb170-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(<span class="at">label =</span> word2, <span class="at">size =</span> p_together<span class="sc">*</span><span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb170-7"><a href="#cb170-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_wordcloud</span>() <span class="sc">+</span></span>
+<span id="cb170-8"><a href="#cb170-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Seminario_AnalisisTextosEcologia_files/figure-html/relacion%20palabras-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="recursos-y-agradecimientos" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="recursos-y-agradecimientos"><span class="header-section-number">1.8</span> Recursos y agradecimientos</h2>
+<p>El contenido de este seminario se basa en el código desarrollado para la publicación <em>Reassessing science communication for effective farmland biodiversity conservation</em> <a href="https://www.sciencedirect.com/science/article/pii/S0169534724000326" class="uri">https://www.sciencedirect.com/science/article/pii/S0169534724000326</a>.</p>
+<p>Las distintas secciones se han desarrollado utilizando la información de distintos tutoriales, libros y páginas web. La gran mayoría citadas a lo largo del seminario. Otras fuentes de interés para el manejo de caracteres y el análisis de textos en R son: <a href="https://link.springer.com/book/10.1007/978-3-319-03164-4" class="uri">https://link.springer.com/book/10.1007/978-3-319-03164-4</a> <a href="http://jvera.rbind.io/post/2017/10/16/spanish-stopwords-for-tidytext-package/" class="uri">http://jvera.rbind.io/post/2017/10/16/spanish-stopwords-for-tidytext-package/</a> <a href="https://bookdown.org/dereksonderegger/444/string-manipulation.html" class="uri">https://bookdown.org/dereksonderegger/444/string-manipulation.html</a> <a href="https://github.com/gagolews/stringi?tab=readme-ov-file" class="uri">https://github.com/gagolews/stringi?tab=readme-ov-file</a> <a href="https://www.tidytextmining.com/" class="uri">https://www.tidytextmining.com/</a> <a href="https://users.ssc.wisc.edu/~hemken/Rworkshops/dwr/character.html" class="uri">https://users.ssc.wisc.edu/~hemken/Rworkshops/dwr/character.html</a></p>
+<p>La limpieza de datos utilizando gbif es una sugerencia de Jose Lanuza: <a href="https://scholar.google.com/citations?user=F6C5gFcAAAAJ&amp;hl=en" class="uri">https://scholar.google.com/citations?user=F6C5gFcAAAAJ&amp;hl=en</a> y el código está inspirado en el código desarrollado para la base de datos de abejas de la Península Ibérica <a href="https://github.com/ibartomeus/IberianBees" class="uri">https://github.com/ibartomeus/IberianBees</a>.</p>
+<p>Ira Hannappel <a href="https://www.uni-goettingen.de/en/659155.html" class="uri">https://www.uni-goettingen.de/en/659155.html</a> me ha cedido los datos de abejas utilizados para la limpieza de nombres taxonómicos.</p>
+<p>La plantilla de quarto ha sido copiada del repositorio <a href="https://github.com/DatSciR/ciencia_datos/tree/main" class="uri">https://github.com/DatSciR/ciencia_datos/tree/main</a></p>
+<p>En la creación de estos materiales se ha utilizado R copilot.</p>
+<p>Agradecer a la Asociación Española de Ecología Terrestre y al Grupo de Ecoinformática la oportunidad de impartir este seminario. Especialmente a Verónica Cruz Alonso, Julen Astigarraga y Elena Quintero por su papel de organizadores.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

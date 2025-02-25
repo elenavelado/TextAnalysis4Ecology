@@ -42,7 +42,7 @@ En este seminario:
 
 En R, los textos se representan como series de caracteres (character strings). Los caracteres se definen con comillas simples o dobles y pueden ser guardados en objetos de clase "character". Por ejemplo:
 
-```{r}
+```{r objeto character}
 "esto es un texto"
 a <- "esto es otro texto"
 a
@@ -51,14 +51,14 @@ class(a)
 
 Dentro de los character strings se pueden usar comillar. Si se usa comillas simples, se pueden usar comillas dobles dentro del texto y viceversa. Por ejemplo:
 
-```{r}
+```{r comillas}
 x <- "El grupo de trabajo de Ecoinformática es el más 'cool' de la AEET"
 x
 ```
 
 Se pueden concatenar caracteres con la función `paste()`, que además permite definir cómo se realiza la concatenación. También la función `rep()`nos ayuda a repetir elementos de un vector. Por ejemplo:
 
-```{r}
+```{r concatenar caracteres}
 name <- "Mochi"
 
 surname <- "Condatos"
@@ -74,13 +74,13 @@ paste(rep(name, 4), collapse = '')
 
 Distintas funciones nos pueden ayudar a visibililzar los caracteres:
 
--   print() nos permite imprimir el contenido de un objeto.
+-   `print()` nos permite imprimir el contenido de un objeto.
 
--   noquote() nos permite imprimir el contenido de un objeto sin comillas.
+-   `noquote()` nos permite imprimir el contenido de un objeto sin comillas.
 
--   cat() concatena e imprime y también nos permite definir cómo se imprime el contenido de un objeto.
+-   `cat()` concatena e imprime y también nos permite definir cómo se imprime el contenido de un objeto.
 
-```{r}
+```{r visibilizar caracteres}
 name <- "Mochi"
 
 surname <- "Condatos"
@@ -99,7 +99,7 @@ Se puede contar el número de elementos que tiene un objeto string con la funci�
 
 La función `nchar()` nos da el número de caracteres de un string.
 
-```{r}
+```{r extensión caracteres}
 
 length(scientist)
 
@@ -111,7 +111,7 @@ nchar(scientist)
 
 Los caracteres se pueden convertir en mayúsculas o minúsculas con las funciones `toupper()` y `tolower()`:
 
-```{r}
+```{r mayus minus}
 
 toupper(scientist)
 tolower(scientist)
@@ -119,14 +119,14 @@ tolower(scientist)
 
 Para reemplazar alguno de los caracteres de un string, se puede usar la función `chartr()`. Por ejemplo, para reemplazar las vocales con tilde por vocales sin tilde:
 
-```{r}
+```{r reemplazar caracteres}
 x <- "Mochi es el mejor pERRo para aprender a programar."
 chartr(old = "ERR", new = "err", x)
 ```
 
 Para extraer partes de un string, se puede usar la función `substr()`. Por ejemplo, para extraer los primeros 5 caracteres de un string:
 
-```{r}
+```{r extraer caracteres}
 substr(x, start = 1, stop = 5)
 substr(x, start = 18, stop = 23)
 
@@ -134,7 +134,7 @@ substr(x, start = 18, stop = 23)
 
 También se puede separar un string en partes más pequeñas con la función `strsplit()`. Por ejemplo, para separar las palabras de una frase:
 
-```{r}
+```{r separar caracteres}
 x <- "Mochi es el mejor perro para aprender a programar."
 y <- strsplit(x, split = " ")
 y
@@ -142,7 +142,7 @@ y
 
 También podemos identificar patrones de caracteres con la función `grep()`. Por ejemplo, para identificar las palabras que contienen la letra "o", las que empiezan por "M" o las que terminan en "r":
 
-```{r}
+```{r identificar caracteres}
 
 z <- c("Mochi", "es", "el", "mejor", "perro", "para", "aprender", "a", "programar")
   
@@ -156,9 +156,11 @@ grep("r$", z, value=TRUE)
 
 Para especificar la posicion en un string hay que usar expresiones regulares, por ejemplo “\^” para caracteres al principio y “\$” para caracteres al final. Por tanto, algunos caracteres son usados como metacaracteres con un significado especial en las expresiones regulares. El punto (.), el asterisco (\*), el signo de interrogación (?), el signo más (+), el signo de intercalación (\^), el signo del dólar (\$), los corchetes (\[, \]), las llaves ({, }), el guión (-), entre otros, tienen un significado no literal. Puedes consultar más información por ejemplo aquí
 
-```{r}
+```{r expresiones regulares}
+#| eval: false
 
 ?regex
+
 ```
 
 o aqui <https://uc-r.github.io/regex#regex_functions_base>.
@@ -167,7 +169,7 @@ En mi opinión, las expresiones regulares y los metacaracteres son una de las di
 
 Para modificar el contenido de un string, se pueden usar las funciones `sub()` y `gsub()`. La función `sub()` reemplaza la primera ocurrencia de un patrón en un string, mientras que `gsub()` reemplaza todas las ocurrencias de un patrón en un string. Por ejemplo:
 
-```{r}
+```{r identificar y reemplazar caracteres}
 texto <- "El grupo de trabajo de Ecoinformática de la Asociación Española de Ecología Terrestre pretende fomentar el intercambio de experiencias y conocimientos sobre cualquier aspecto relacionado con la ecoinformática, además de contribuir a la formación de los nuevos ecólogos en buenas prácticas y técnicas de computación que les permitan desarrollar al máximo sus proyectos de investigación."
 texto
 nuevo_texto <- gsub("Asociación Española de Ecología Terrestre", "AEET", texto)
@@ -176,7 +178,7 @@ nuevo_texto
 
 R base tiene una serie de funciones muy útiles para comparar dos vectores de caracteres.
 
-```{r}
+```{r comparar caracteres}
 library(gt)
 
 # Crear data frame con la información
@@ -187,15 +189,15 @@ set_operations <- data.frame(
                   "is element", "contains", "sorting")
 )
 
-set_operations %>%
-  gt() %>%
+set_operations |> 
+  gt() |> 
   tab_header(
     title = "Set Operations in R")
 ```
 
 Yo uso frecuentemente estas funciones para trabajar con especies y nombres taxonómicos. Por ejemplo:
 
-```{r}
+```{r ejemplos comparar caracteres}
 
 species1 <- c("Protaetia morio", "Agrypnus murinus", "Stenobothrus lineatus", "Philoscia muscorum")
 
@@ -224,7 +226,7 @@ sort(species1)
 
 Una de mis funciones favoritas para encontrar errores al trabajar con nombres de especies es la función `agrep` que permite buscar patrones aproximados en un vector de caracteres.
 
-```{r}
+```{r buscar caracteres fuzzy}
 datos_abejas <- data.frame(
   Especie = c("Andrena_chrysosceles", "Lasioglossum_villosulum", "Bombus_silvarum",
               "Halictus_tumulorum", "Apis_mellifera"),
@@ -250,7 +252,7 @@ Existen cuatro familias principales de funciones en stringr:
 
 -   Funciones de concordancia de patrones, incluyendo las expresiones regulares.
 
-```{r}
+```{r stringr mayus minus}
 library(stringr)
 scientist
 str_length(scientist) #equivalente a nchart()
@@ -262,7 +264,7 @@ str_to_upper(scientist) #equivalente a toupper()
 str_to_lower(scientist) #equivalente a tolower()
 ```
 
-```{r}
+```{r stringr reemplazar separar}
 texto <- "Hola AEET"
 texto
 nuevo_texto <- str_replace(texto, "AEET", "EcoInformatica ")
@@ -275,7 +277,7 @@ str_split(nuevo_texto, "") #separa caracteres
 
 ```
 
-```{r}
+```{r stringr patrones}
 print(datos_abejas$Especie)
 str_detect("Apis_mellifera", datos_abejas$Especie) #equivalente a grepl()
 
@@ -292,7 +294,7 @@ str_match(abejorros, "Bombus") #devuelve el patrón encontrado
 str_split(abejorros, "_") #equivalente a strsplit()
 ```
 
-```{r}
+```{r stringr tamaño}
 poema_espronceda <- str_c("Con diez cañones por banda, viento ",
                           "en popa a toda vela, no corta el mar, ",
                           "sino vuela un velero bergantín: bajel ",
@@ -314,7 +316,7 @@ Puedes encontrar más información sobre el paquete `stringr` en la documentaci�
 
 En ecología, es frecuente trabajar con nombres taxonómicos de especies. Estos nombres pueden contener errores tipográficos, abreviaturas, sinónimos, etc. que dificultan su análisis. Aunque es recomendable hacer una limpieza detallada y manual, se puede hacer una aproximación de limpieza automática de nombres taxonómicos con la Taxonomía Base de GBIF <https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c> y el paquete `rgbif`.
 
-```{r}
+```{r limpieza nombres taxonómicos}
 library(tidyverse)
 library(rgbif)
 library(here)
@@ -349,9 +351,9 @@ unique(unmatched$matchType)
 #Checking unmatched names
 fixing <- unmatched |>  select(scientificName, matchType, verbatim_name)
 #When it is FUZZY it seems to find the correct name easily
-#Be carefull other situations can also happen
+#Be careful other situations can also happen
 
-#Creating a data.frame that contects old name with typo and newname with corrected scientific name
+#Creating a data.frame that contents old name with typo and new names with corrected scientific name
 
 fixing <- fixing |>
   rename(Bee_name = verbatim_name) |>
@@ -372,7 +374,7 @@ df.e
 
 La función `pdf_data` del paquete `pdftools` permite extraer el texto de un archivo pdf. Sin embargo, si existen fotografías o figuras no siempre es posible extraer el texto de estos o puede haber errores al leer el archivo. En estos casos se puede usar la función `pdf_ocr_text` para extraer el texto mediante reconocimiento óptico (OCR).
 
-```{r}
+```{r leer pdf}
 library(pdftools)
 library(purrr)
 
@@ -420,7 +422,7 @@ Además, en el lenguaje muy frecuentemente utilizamos conjuntos de palabras, com
 
 Existen otros aspectos de este tipo a tener en cuenta antes de realizar análisis de texto, pero que yo no voy a ahondar en ellos en este seminario. Un ejemplo es la lematización (*stemming*) que consiste en reducir las palabras a su raíz o lema, de manera que se evita la duplicación devido a plurales, la conjugación de verbos, palabras derivadas, etc..
 
-```{r}
+```{r limpieza textos}
 library(textclean)
 library(tidytext)
 library(tm)
@@ -431,7 +433,9 @@ stop_words_es <- bind_rows(stop_words,
                                           lexicon = "custom")) |> 
   filter(lexicon == "custom")
 
-word_c <- textos_df [18,2] |> 
+word_c <- textos_df |> 
+  select(text) |> 
+  slice(18) |>
   str_to_lower() |> 
   replace_date(replacement = "") |> # remove dates
   replace_time(replacement = "") |> # remove time
@@ -467,13 +471,13 @@ word_c <- textos_df [18,2] |>
 
 Una cuestión central en el análisis de textos es cómo cuantificar de qué trata un documento. Una de las formas más directas y simples es contar las palabras que aparecen en el texto. Las nubes de palabras sirven para visualizar las palabras más frecuentes en un texto de manera sencilla. En R, el paquete `ggwordcloud` permite hacer nubes de palabras de forma sencilla. Existen otros paquetes que permiten hacer nubes de palabras, como `wordcloud2`. Puedes consultar estos recursos para más información: <https://r-graph-gallery.com/wordcloud.html>
 
-```{r}
+```{r nubes palabras}
 library(ggwordcloud)
 
 word_c |>
   ggplot( aes(label = word, size = countWords)) +
   geom_text_wordcloud() +
-  theme_minimal
+  theme_minimal()
 
 ```
 
@@ -493,7 +497,7 @@ Existen diversas metodologías y marcos teóricos a la hora de hacer análisis d
 
 Existen otras muchas formas de analizar textos como por ejemplo a través del análisis de sentimientos, la clasificación de textos, modelización de temas, etc. Aquí podéis encontrar más información sobre el análisis de textos en R: <https://guides.library.upenn.edu/penntdm/r>.
 
-```{r}
+```{r relacion palabras}
 library(tidytext) #text miny under tidy philosophy
 library(widyr) #widen, process & re-tidy data (calculates paiwise correlations and distance)
 
@@ -558,24 +562,33 @@ return(output)
 }
 
 
-
 textos_df_clean <- textos_df |>
   mutate(r_corr_gram = map(text, clean_text_R_corr_20))
 
 
 textos_df_clean |>
   unnest(r_corr_gram) |>
+  select(document, word2, p_together)
+
+textos_df_clean |>
+  unnest(r_corr_gram) |>
   select(document, word2, p_together) |> 
-  distinct(word2)
+  filter(!word2 %in% c("ecoinformática", "verónica", "cruzalonso", "cualquier"))|>
+  distinct( word2, p_together) |> 
+  ggplot( aes(label = word2, size = p_together*10)) +
+  geom_text_wordcloud() +
+  theme_minimal()
 ```
 
 ## Recursos y agradecimientos
 
 El contenido de este seminario se basa en el código desarrollado para la publicación *Reassessing science communication for effective farmland biodiversity conservation* <https://www.sciencedirect.com/science/article/pii/S0169534724000326>.
 
-Las distintas secciones se han desarrollado utilizando la información de distintos tutoriales, libros y páginas web. La gran mayoría citadas a lo largo del seminario. Otras fuentes de interés son:
+Las distintas secciones se han desarrollado utilizando la información de distintos tutoriales, libros y páginas web. La gran mayoría citadas a lo largo del seminario. Otras fuentes de interés para el manejo de caracteres y el análisis de textos en R son: <https://link.springer.com/book/10.1007/978-3-319-03164-4> <http://jvera.rbind.io/post/2017/10/16/spanish-stopwords-for-tidytext-package/> <https://bookdown.org/dereksonderegger/444/string-manipulation.html> <https://github.com/gagolews/stringi?tab=readme-ov-file> <https://www.tidytextmining.com/> <https://users.ssc.wisc.edu/~hemken/Rworkshops/dwr/character.html>
 
-<https://link.springer.com/book/10.1007/978-3-319-03164-4> <http://jvera.rbind.io/post/2017/10/16/spanish-stopwords-for-tidytext-package/> <https://bookdown.org/dereksonderegger/444/string-manipulation.html> <https://github.com/gagolews/stringi?tab=readme-ov-file> <https://www.tidytextmining.com/> <https://users.ssc.wisc.edu/~hemken/Rworkshops/dwr/character.html>
+La limpieza de datos utilizando gbif es una sugerencia de Jose Lanuza: <https://scholar.google.com/citations?user=F6C5gFcAAAAJ&hl=en> y el código está inspirado en el código desarrollado para la base de datos de abejas de la Península Ibérica <https://github.com/ibartomeus/IberianBees>.
+
+Ira Hannappel <https://www.uni-goettingen.de/en/659155.html> me ha cedido los datos de abejas utilizados para la limpieza de nombres taxonómicos.
 
 La plantilla de quarto ha sido copiada del repositorio <https://github.com/DatSciR/ciencia_datos/tree/main>
 

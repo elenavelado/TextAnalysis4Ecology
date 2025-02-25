@@ -183,10 +183,10 @@ library(gt)
 
 # Crear data frame con la información
 set_operations <- data.frame(
-  Function = c("union()", "intersect()", "setdiff()", "setequal()", "identical()", 
-               "is.element()", "%in%()", "sort()"),
+  Function = c("union", "intersect", "setdiff", "setequal", "identical", 
+               "is.element", "sort"),
   Description = c("set union", "intersection", "set difference", "equal sets", "exact equality",
-                  "is element", "contains", "sorting")
+                  "is element", "sorting")
 )
 
 set_operations |> 

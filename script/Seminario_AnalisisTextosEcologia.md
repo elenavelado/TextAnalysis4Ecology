@@ -2,10 +2,10 @@
 <img src="images/ecoinf_10.jpg" />
 
 Elena Velado-Alonso
-25/02/2025
+26/02/2025
 
 - [<span class="toc-section-number">1</span> Análisis de textos con R:
-  Ejemplos útiles para la
+  ejemplos útiles para la
   ecología.](#análisis-de-textos-con-r-ejemplos-útiles-para-la-ecología)
   - [<span class="toc-section-number">1.1</span> Caracteres en R
     base](#caracteres-en-r-base)
@@ -28,7 +28,7 @@ Elena Velado-Alonso
   - [<span class="toc-section-number">1.8</span> Recursos y
     agradecimientos](#recursos-y-agradecimientos)
 
-# Análisis de textos con R: Ejemplos útiles para la ecología.
+# Análisis de textos con R: ejemplos útiles para la ecología.
 
 Trabajar con caracteres (string data) en R suele ser percibido como una
 tarea ardua por muchos usuarios. Normalmente, la formación en
@@ -174,16 +174,16 @@ length(scientist)
     [1] 1
 
 ``` r
-length(letters)
-```
-
-    [1] 26
-
-``` r
 nchar(scientist)
 ```
 
     [1] 14
+
+``` r
+length(letters)
+```
+
+    [1] 26
 
 Los caracteres se pueden convertir en mayúsculas o minúsculas con las
 funciones `toupper()` y `tolower()`:
@@ -277,7 +277,7 @@ El punto (.), el asterisco (\*), el signo de interrogación (?), el signo
 más (+), el signo de intercalación (^), el signo del dólar (\$), los
 corchetes (\[, \]), las llaves ({, }), el guión (-), entre otros, tienen
 un significado no literal. Puedes consultar más información por ejemplo
-aquí
+aquí:
 
 ``` r
 ?regex
@@ -406,7 +406,12 @@ datos_abejas <- data.frame(
   Abundancia = c(20, 15, 8, 12, 5)
 )
 
+"Bombus_sylvarum" %in% datos_abejas
+```
 
+    [1] FALSE
+
+``` r
 agrep("Bombus_sylvarum", datos_abejas$Especie, value = TRUE)
 ```
 
@@ -744,7 +749,7 @@ gbif_names
 
 ``` r
 #Match and unmatched records
-matched = gbif_names |>  filter(matchType == "EXACT") #92 matched
+matched <-  gbif_names |>  filter(matchType == "EXACT") #92 matched
 matched
 ```
 
@@ -769,7 +774,7 @@ matched
     #   verbatim_name <chr>, verbatim_index <dbl>, verbatim_order <chr>
 
 ``` r
-unmatched = gbif_names |> filter(matchType != "EXACT") #10 unmached
+unmatched <-  gbif_names |> filter(matchType != "EXACT") #10 unmached
 unmatched
 ```
 
@@ -1014,8 +1019,8 @@ word_c <- textos_df |>
   replace_time(replacement = "") |> # remove time
   str_remove_all(pattern = "[[:punct:]]") |> # remove punctuation
   str_remove_all(pattern = "[^\\s]*[0-9][^\\s]*") |>  # remove mixed string n number
-  replace_contraction() |>  # replace contraction to their multi-word forms
-  replace_word_elongation() |>  # replace informal writing with known semantic replacements
+  #replace_contraction() |>  # replace contraction to their multi-word forms
+  #replace_word_elongation() |>  # replace informal writing with known semantic replacements
   str_squish() |>  # reduces repeated whitespace inside a string
   str_trim() |>  # removes whitespace from start and end of string
   str_replace_all("análisis estadístico", "análisis_estadístico") |> #avoiding collocations
@@ -1135,7 +1140,7 @@ clean_text_R_corr_20 <- function(text) {
   as_tibble(value = .) |>
   rename(text = value) 
   
-  unigram_probs <- corpus |> 
+unigram_probs <- corpus |> 
   unnest_tokens(word, text, strip_numeric = TRUE) |>  
   count(word, sort = TRUE) |> 
   mutate(p = n / sum(n))
@@ -1151,21 +1156,21 @@ skipgram_probs <- tidy_skipgrams |>
   mutate(p = n / sum(n))
 
 
-normalized_prob <- skipgram_probs %>%
-  filter(n > 20) %>%
-  rename(word1 = item1, word2 = item2) %>%
-  left_join(unigram_probs %>%
+normalized_prob <- skipgram_probs |> 
+  filter(n > 20) |> 
+  rename(word1 = item1, word2 = item2) |> 
+  left_join(unigram_probs |> 
               select(word1 = word, p1 = p),
-            by = "word1") %>%
-  left_join(unigram_probs %>%
+            by = "word1") |> 
+  left_join(unigram_probs |> 
               select(word2 = word, p2 = p),
-            by = "word2") %>%
+            by = "word2") |> 
   mutate(p_together = p / p1 / p2)
 
-output <- normalized_prob %>% 
-  filter(word1 == "ecoinformática") %>%
-  filter(!word1 %in% stop_words_es$word) %>%
-  filter(!word2 %in% stop_words_es$word) %>%
+output <- normalized_prob |> 
+  filter(word1 == "ecoinformática") |> 
+  filter(!word1 %in% stop_words_es$word) |> 
+  filter(!word2 %in% stop_words_es$word) |> 
   arrange(-p_together)
 
 return(output)

@@ -6,7 +6,7 @@ date: today
 date-format: "DD/MM/YYYY"
 toc: true
 toc-depth: 4
-toc-title: "Índice"
+toc-title: "Index"
 format:
   html:
     link-external-newwindow: true
@@ -413,7 +413,6 @@ Moreover, in natural languages we very often use collocations, sets of words and
 
 There are other aspects of this kind to be taken into account before carrying out text analysis, but I will not go into them in this seminar. One example is lemmatisation (*stemming*) which consists of reducing words to their root or lemma, so that duplication due to plurals, conjugation of verbs, derived words, etc. is avoided.
 
-
 ```{r text cleaning}
 library(textclean)
 library(tidytext)
@@ -526,8 +525,7 @@ In text analysis, it is common to analyse a collection of related texts (e.g. al
 
 The `tidytext` package allows easy *tokenisation* of a corpus.
 
-It is also common to construct term-document matrices for text analysis, where the rows represent the terms and the columns the documents, similar to the presence-absence matrices we use in ecology for species.
-However, in the tidy philosophy, the structure of one *token* per row would be maintained.
+It is also common to construct term-document matrices for text analysis, where the rows represent the terms and the columns the documents, similar to the presence-absence matrices we use in ecology for species. However, in the tidy philosophy, the structure of one *token* per row would be maintained.
 
 There are various methodologies and theoretical frameworks for text analysis. Among them, the study of the relationship between words is one of the most common. This approach examines which words tend to follow others immediately, or which words tend to co-occur within the same documents. In this second analysis I will focus on this seminar.
 
@@ -651,6 +649,4 @@ For the analysis of word co-ocurrance I've used Ecoinformatics Notes from the Ec
 
 R copilot has been used in the creation of these materials and DeepL as support for the translation of the text.
 
-This seminar was prepared for the seminar series of the Ecoinformatics Group from the Spanish Association of Terrestrial Ecology and and further developed for the Writing Retreat of the Functional Agrobiodiversity & Agroecology Group. 
-Thanks for organising!
-
+This seminar was prepared for the seminar series of the Ecoinformatics Group from the Spanish Association of Terrestrial Ecology and and further developed for the Writing Retreat of the Functional Agrobiodiversity & Agroecology Group. Thanks for organising!

@@ -1,0 +1,656 @@
+---
+title: | 
+  | Text analysis with R: Useful examples for ecology ![](images/logoAF.jpg){width=10,fig-align="right"}
+author: "Elena Velado-Alonso"
+date: today
+date-format: "DD/MM/YYYY"
+toc: true
+toc-depth: 4
+toc-title: "Índice"
+format:
+  html:
+    link-external-newwindow: true
+    # css: styles.css
+  gfm: default
+editor: visual
+editor_options: 
+  chunk_output_type: console
+number-sections: true
+---
+
+## Text analysis with R: useful examples for ecology.
+
+Working with characters (string data) in R is often perceived as an difficult task by many users. Typically, training in programming and data analysis focuses on numerical and analytical issues, but working with characters is rarely addressed in depth. However, work in ecology requires frequent work with characters. In addition, the increasing use of already available databases and [FAIR principles](https://www.go-fair.org/fair-principles/) is increasing the information presented in characters and the need to know how to work with them in programming environments. Therefore, not knowing how to work with characters limits the reproducibility of ecology workflows.
+
+![](images/meme1.png){fig-align="left"}
+
+In this workshop, we will:
+
+-   review basic concepts of working with characters in R
+
+-   look at practical examples for automatic cleanup of taxonomic names
+
+-   learn how to read pdf files in R
+
+-   clean up texts for further analysis
+
+-   make word cloud graphs
+
+-   do simple calculations of word frequencies in texts and correlation between words for content analysis.
+
+## Characters in R base
+
+In R, texts are represented as character strings. Characters are defined with single or double quotes and can be stored in objects of class ‘character’. For example:
+
+```{r character objet}
+"this is a text"
+a <- "this is another text"
+a
+class(a)
+```
+
+Inside character strings, quotation marks can be used. If single quotes are used, double quotes can be used inside the text and vice versa. For example:
+
+```{r quotation marks}
+x <- "Germany has the 'best' weather"
+x
+```
+
+You can concatenate characters with `paste()` function, which also allows you to define how the concatenation is performed. Also, `rep()` function helps us to repeat elements of a vector. For example:
+
+```{r pasting characters}
+name <- "Erika"
+
+surname <- "Mustermann"
+
+paste(name, surname)
+
+paste(name, surname, sep = "_")
+
+paste0(name, surname)
+
+paste(rep(name, 4), collapse = '')
+```
+
+Different functions can help us to make characters visible:
+
+-   `print()` allows us to print the contents of an object.
+
+-   `noquote()` allows us to print the contents of an object without quotes.
+
+-   `cat()` concatenates and prints and also allows us to define how the contents of an object are printed.
+
+```{r visualizing characters}
+name <- "Erika"
+
+surname <- "Mustermann"
+
+scientist <- paste(name, surname)
+
+print(scientist)
+
+noquote(scientist)
+
+cat(letters, sep = "_") 
+
+```
+
+You can count the number of elements in a string object with `length()` function.`nchar()` function gives the number of characters in a string.
+
+```{r character extension}
+
+length(scientist)
+
+nchar(scientist)
+
+length(letters)
+
+```
+
+Characters can be converted to upper or lower case with the `toupper()` and `tolower()` functions:
+
+```{r mayus minus}
+
+toupper(scientist)
+tolower(scientist)
+```
+
+To replace any of the characters in a string, you can use the `chartr()` function. For example:
+
+```{r replacement characters}
+x <- "Funktional AgrobiodÑversity & Agroecology is the best group"
+chartr(old = "Funktional AgrobiodÑversity & Agroecology", new = "Functional Agrobiodiversity & Agroecology", x)
+```
+
+To extract parts of a string, `substr()` function can be used.
+
+```{r extract characters}
+substr(x, start = 1, stop = 5)
+substr(x, start = 18, stop = 23)
+```
+
+You can also split a string into smaller parts with `strsplit()` function. For example, to separate the words of a sentence:
+
+```{r split characters}
+x <- "Functional Agrobiodiversity & Agroecology is the best group"
+y <- strsplit(x, split = " ")
+y
+```
+
+We can also identify character patterns with `grep()` function. For example, to identify words containing the letter ‘y’, words beginning with ‘F’ or words ending in ‘p’:
+
+```{r identify characters}
+
+z <- c("Functional", "Agrobiodiversity", "&", "Agroecology", "is",          "the", "best", "group" )
+  
+grep("y", z, value=TRUE)
+grepl("y", z)
+
+grep("^F", z, value=TRUE)
+grep("p$", z, value=TRUE)
+
+```
+
+To specify the position in a string you have to use regular expressions, for example ‘\^’ for characters at the beginning and ‘\$’ for characters at the end. Therefore, some characters are used as metacharacters with a special meaning in regular expressions. The full stop (.), the asterisk (\*), the question mark (?), the plus sign (+), the caret (\^), the dollar sign (\$), the square brackets (\[, \]), the braces ({, }), the hyphen (-), among others, have a non-literal meaning. You can read more information for example here:
+
+```{r regular expressions}
+#| eval: false
+
+?regex
+
+```
+
+or here <https://uc-r.github.io/regex#regex_functions_base>.
+
+In my opinion, regular expressions and metacharacters are one of the difficulties we encounter when working with characters in base R. Some features of the ‘tidy’ packages simplify working with regular expressions, as we will see below.
+
+To modify the content of a string,`sub()` and `gsub()` functions can be used. The `sub()` function replaces the first occurrence of a pattern in a string, while `gsub()` replaces all occurrences of a pattern in a string. For example:
+
+```{r identification replacement characters}
+info <- "Functional Agrobiodiversity & Agroecology Group is guided by principles of ecological intensification to maintain or increase long-term agricultural productivity while protecting and enhancing biodiversity"
+info
+new_info <- gsub("Functional Agrobiodiversity & Agroecology Group", "FA&A", info)
+new_info
+```
+
+Base R has a number of useful functions for comparing two character vectors.
+
+| Set Operations in R |                |
+|---------------------|----------------|
+| Function            | Description    |
+| union()             | set union      |
+| intersect()         | intersection   |
+| setdiff()           | set difference |
+| setequal()          | equal sets     |
+| identical()         | exact equality |
+| is.element()        | is element     |
+| sort()              | sorting        |
+
+I frequently use these functions to work with species and taxonomic names. For example:
+
+```{r examples comparing char vectors}
+
+species1 <- c("Protaetia morio", "Agrypnus murinus", "Stenobothrus lineatus", "Philoscia muscorum")
+
+species2 <- c("Protaetia morio", "Tettigonia cantans", "Stenobothrus lineatus", "Mangora acalypha")
+
+union(species1, species2) #all unique species
+
+intersect(species1, species2) #common species
+
+setdiff(species1, species2) #species in species1 but not in species2
+setdiff(species2, species1) #species in species2 but not in species1
+
+setequal(species1, species2) #are they equal?
+
+species3 <- c("Philoscia muscorum", "Stenobothrus lineatus", "Agrypnus murinus", "Protaetia morio")
+
+setequal(species1, species3)
+identical(species1, species3)
+
+is.element("Protaetia morio", species1)
+
+"Protaetia morio" %in% species1
+
+sort(species1)
+```
+
+One of my favourite functions for finding errors when working with species names is the `agrep` function which allows you to search for approximate patterns in a character vector.
+
+```{r buscar caracteres fuzzy}
+bee_data <- data.frame(
+  Species = c("Andrena_chrysosceles", "Lasioglossum_villosulum", "Bombus_silvarum",
+              "Halictus_tumulorum", "Apis_mellifera"),
+  Abundance = c(20, 15, 8, 12, 5)
+)
+
+"Bombus_sylvarum" %in% bee_data
+
+agrep("Bombus_sylvarum", bee_data$Species, value = TRUE)
+
+```
+
+## Package `stringr`: characters with tidy philosophy
+
+`stringr` is a package developed to handle characters under the tidy philosophy, which enhances some applications such as working with NA.
+
+There are four main families of functions in `stringr`:
+
+-   Character manipulation: these functions allow to manipulate individual characters within vectors.
+
+-   Whitespace tools for adding, removing and manipulating whitespace.
+
+-   Location-sensitive operations.
+
+-   Pattern matching functions, including regular expressions.
+
+```{r stringr mayus minus}
+library(stringr)
+scientist
+str_length(scientist) #== nchart()
+
+str_sub(scientist, start = 2, end = -2) #== substr()
+
+str_to_upper(scientist) #== toupper()
+
+str_to_lower(scientist) #== tolower()
+```
+
+```{r stringr replace split}
+text <- "Hallo Functional Agrobiodiversity & Agroecology Group"
+text
+new_text <- str_replace(text, "Functional Agrobiodiversity & Agroecology Group", "FA&A ")
+new_text
+
+str_trim(new_text) #removes whitespaces
+
+str_split(new_text, "") #split characteres
+
+```
+
+```{r stringr pattern}
+
+print(bee_data$Species)
+str_detect("Apis_mellifera", bee_data$Species) #== grepl()
+
+str_replace("Bombus_mellifera", "Bombus", "Apis") #== gsub()
+
+hummeln <- c("Bombus_silvarum", "Bombus_terrestris", "Bombus_pascuorum", "Bombus_pratorum", "Bombus_humilis")
+
+str_count(hummeln, "Bombus") #counts the number of times a pattern appears
+
+str_locate(hummeln, "Bombus") #locates the position of a pattern
+
+str_match(hummeln, "Bombus") #returns the found pattern
+
+str_split(hummeln, "_") #== strsplit()
+```
+
+```{r stringr width}
+poem <- c("Freude, schöner Götterfunken, Tochter ",
+          "aus Elysium, Wir betreten feuertrunken,",
+          "Himmlische, dein Heiligtum. Deine Zauber",
+          "binden wieder, Was die Mode streng geteilt;",
+          "Alle Menschen werden Brüder, Wo dein sanfter",
+          " Flügel weilt.")
+
+
+poem
+
+str_flatten(poem) #== paste()
+
+cat(str_wrap(poem, width = 30)) #adapt the text to a specific width
+
+```
+
+## Automatic cleaning of taxonomic names with gbif
+
+In ecology, it is common to work with taxonomic names of species. These names may contain typographical errors, abbreviations, synonyms, etc. that make their analysis difficult. Although detailed manual cleaning is recommended, an automatic taxonomic name cleaning approach can be done with the GBIF Base Taxonomy <https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c> and `rgbif` package.
+
+```{r taxonomic names cleaning}
+library(tidyverse)
+library(rgbif)
+library(here)
+
+#For Bees
+#1) Load bee spp names
+df.e <- read_delim(here("data/df.e.csv"), delim = ";")
+
+#Create poll spp name dataset
+Poll_spp <- df.e |> select(Bee_name) |>  
+  distinct() |>
+  arrange(Bee_name) |> pull()
+Poll_spp
+
+#2) Retrieve GBIF taxonomy
+#name_backbone_checklist()
+#Lookup names in the GBIF backbone taxonomy in a checklist.
+
+gbif_names <- name_backbone_checklist(name_data = Poll_spp, order = "   Hymenoptera")
+gbif_names
+
+
+#Match and unmatched records
+matched <-  gbif_names |>  filter(matchType == "EXACT") #92 matched
+matched
+
+unmatched <-  gbif_names |> filter(matchType != "EXACT") #10 unmached
+unmatched
+unique(unmatched$matchType)
+#"FUZZY" because of misspelling   
+
+#Checking unmatched names
+fixing <- unmatched |>  select(scientificName, matchType, verbatim_name)
+#When it is FUZZY it seems to find the correct name easily
+#Be careful other situations can also happen
+
+#Creating a data.frame that contents old name with typo and new names with corrected scientific name
+
+fixing <- fixing |>
+  rename(Bee_name = verbatim_name) |>
+  mutate(sci_name =  word(scientificName, 1,2)) |>
+  select(-c(scientificName, matchType))
+fixing
+
+#3) Creating a dataframe with a new column with the Fixed names: Fixed_bee_name
+
+df.e <- df.e |>
+  left_join(fixing) |>
+  mutate(Fixed_bee_name = ifelse(is.na(sci_name), Bee_name, sci_name)) |>
+  select(- sci_name)
+df.e
+```
+
+## Read pdf in R and clean up text
+
+`pdf_data` function from the `pdftools` package allows to extract text from a pdf file. However, if the pdf includes pictures or figures, it is not always possible to extract the text correctly. In these cases, `pdf_ocr_text` function can be used to extract the text using optical text recognition (OCR).
+
+```{r read pdf}
+library(pdftools)
+library(purrr)
+
+#folder path
+folder_path <- here("researchers/")
+
+#PDF files: Web description Team of Functional Agrobiodiversity
+pdf_files <- list.files(folder_path, pattern = "\\.pdf$", full.names = TRUE)
+
+#Function to extract text from PDFs already in tidyformat 
+read_pdf <- function(doc) {
+  t <- pdf_data(doc) 
+  pt <- map_chr(t, ~ .x |>  select(text) |>  unlist() |>  paste0(collapse = " "))
+  completetext <- paste0(pt, collapse = " ")
+  
+  # If the extracted text is too short, use OCR
+  if (nchar(completetext) < 15) {
+    tcompletetext  <- paste0(pdf_ocr_text(doc), collapse = " ")
+  }
+  
+  # Return a tibble with the document name and extracted text
+  tibble(document = doc, text = completetext )
+}
+
+web_texts <- map(pdf_files, read_pdf)
+
+web_texts_df <- bind_rows(web_texts) |> 
+  mutate(document = str_replace(document, pattern = paste0(folder_path, "/"), replacement = ""))
+
+str(web_texts_df)
+
+unique(web_texts_df$document)
+
+```
+
+## Text cleaning
+
+Text analysis often requires prior work to clean up characters and words. Simple issues such as the use of upper and lower case, dates, times and other numbers, punctuation marks, etc. can limit the data processing capacity of computers and bias text analysis. Therefore, texts often require a normalisation process before they can be processed.
+
+Two key points to bear in mind when text cleaning are 1) the elimination of stop words and 2) the normalisation of words.
+
+In natural languages there are a number of words that do not contribute meaning to the text, such as prepositions, conjunctions, articles, etc., but which appear very frequently. These words are known as stop words. There is no definitive list of stop words, but different packages offer proposals of stop words for filtering. In R, the `tidytext` package has a list of empty words in English that can be used to remove them from texts. For other lenguages, the `stopwords` package can be used: <https://cran.r-project.org/web/packages/stopwords/readme/README.html>
+
+Moreover, in natural languages we very often use collocations, sets of words and lexical combinations, which are used together and have a joint meaning (for example ‘statistical analysis’), and which should preferably be analysed together.
+
+There are other aspects of this kind to be taken into account before carrying out text analysis, but I will not go into them in this seminar. One example is lemmatisation (*stemming*) which consists of reducing words to their root or lemma, so that duplication due to plurals, conjugation of verbs, derived words, etc. is avoided.
+
+
+```{r text cleaning}
+library(textclean)
+library(tidytext)
+
+
+web_texts_df |> 
+  select(text) |> 
+  slice(1) |>
+  str_to_lower() |> 
+  replace_date(replacement = "") |> # remove dates
+  replace_time(replacement = "") |> # remove time
+  str_remove_all(pattern = "[[:punct:]]") |> # remove punctuation
+  str_remove_all(pattern = "[^\\s]*[0-9][^\\s]*") |>  # remove mixed string n number
+  #replace_contraction() |>  # replace contraction to their multi-word forms
+  #replace_word_elongation() |>  # replace informal writing with known semantic replacements
+  str_squish() |>  # reduces repeated whitespace inside a string
+  str_trim() |>  # removes whitespace from start and end of string
+  str_replace_all("functional agrobiodiversity", "f_agrobiodiversity") |> #avoiding collocations
+  str_replace_all("wildlife management", "widelife_mng") |> #avoiding collocations
+  str_replace_all("nature conservation", "nature_cons") |> #avoiding collocations
+  str_replace_all("landscape ecology", "lnds_ecology") |> 
+  str_replace_all("habitat quality", "h_quality") |>  #avoiding collocations
+  str_replace_all("wild bees", "wild_bees") |>  #avoiding collocations
+  str_replace_all("ecosystem services", "ecoservices") |>  #avoiding collocations
+  str_split(boundary("word")) |> 
+  unlist() |>
+  as_tibble(value = .) |>
+  rename(word = value) |>
+  anti_join(stop_words) |>  # remove stop words
+  filter(!str_detect(word, "^http"))  |>  #removes webpages
+  filter(!str_detect(word, "^www"))  |>  #removes webpages
+  filter(!str_detect(word, "^doi")) |> #removes bibliographic repetitions
+  filter(!str_detect(word, "^pp")) |>  #removes bibliographic repetitions
+  filter(!str_detect(word, "^al")) |>  #removes bibliographic repetitions
+  drop_na() |> 
+  group_by(word) |> 
+  mutate(countWords = n()) |> 
+  distinct() |> arrange(desc(countWords))
+
+
+clean_text <- function(text) {
+  word_count <- text |> 
+    str_to_lower() |> 
+    str_remove_all(pattern = "[[:punct:]]") |> # remove punctuation
+    replace_date(replacement = "") |> # remove dates
+    replace_time(replacement = "") |> # remove time
+    str_remove_all(pattern = "[^\\s]*[0-9][^\\s]*") |>  # remove mixed string n number
+    #replace_contraction() |>  # replace contraction to their multi-word forms
+    #replace_word_elongation() |>  # replace informal writing with known semantic replacements
+    str_squish() |>  # reduces repeated whitespace inside a string
+    str_trim() |>  # removes whitespace from start and end of string
+    str_replace_all("functional agrobiodiversity", "f_agrobiodiversity") |> #avoiding collocations
+    str_replace_all("wildlife management", "widelife_mng") |> #avoiding collocations
+    str_replace_all("nature conservation", "nature_cons") |> #avoiding collocations
+    str_replace_all("landscape ecology", "lnds_ecology") |> 
+    str_replace_all("habitat quality", "h_quality") |>  #avoiding collocations
+    str_replace_all("wild bees", "wild_bees") |>  #avoiding collocations
+    str_replace_all("ecosystem services", "ecoservices") |>  #avoiding collocations
+    str_split(boundary("word")) |> 
+    unlist() |>
+    as_tibble(value = .) |>
+    rename(word = value) |>
+    anti_join(stop_words) |>  # remove stop words
+    filter(!str_detect(word, "^http"))  |>  #removes webpages
+    filter(!str_detect(word, "^www"))  |>  #removes webpages
+    filter(!str_detect(word, "^doi")) |> #removes bibliographic repetitions
+    filter(!str_detect(word, "^pp")) |>  #removes bibliographic repetitions
+    filter(!str_detect(word, "^al")) |>  #removes bibliographic repetitions
+    drop_na() |> 
+    group_by(word) |> 
+    mutate(countWords = n()) |> 
+    distinct() |> arrange(desc(countWords))
+  
+  return(word_count)
+}
+
+web_texts_df <- web_texts_df |>
+  mutate(word_count = map(text, clean_text))
+
+```
+
+## Text analysis: Frequency and word clouds
+
+A central question in text analysis is how to quantify what a document is about. One of the most straightforward and simple ways is to count the words that appear in the text. Word clouds are used to visualise the most frequent words in a text in a simple way. In R, the `ggwordcloud` package allows you to make word clouds in a simple way. There are other word cloud packages, such as `wordcloud2`. You can consult these resources for more information: <https://r-graph-gallery.com/wordcloud.html>
+
+```{r word cloud}
+library(ggwordcloud)
+
+web_texts_df |> 
+  unnest(word_count) |>
+  group_by(word) |>
+  summarise(countWords = sum(countWords)) |>
+  arrange(desc(countWords)) |>
+  filter(!word %in% c("göttingen", "university", "georgaugustuniversität", 
+                      "ecampus", "dr", "tel", "germany", "pm", "media")) |>
+  filter(countWords > 15) |>
+  ggplot( aes(label = word, size = countWords, colour = countWords)) +
+  geom_text_wordcloud() +
+  scale_color_gradient(low = "blue", high = "red") +
+  theme_minimal()
+```
+
+In this tutorial they explain how to improve the aesthetics and composition of word clouds: <https://cran.r-project.org/web/packages/ggwordcloud/vignettes/ggwordcloud.html>.
+
+Other analyses based on word frequency are used to derive the importance of words in a set of texts. You can take a look at this tutorial <https://www.tidytextmining.com/tfidf>.
+
+## Text analysis: Relationship between words
+
+In text analysis, it is common to analyse a collection of related texts (e.g. all texts from an author, or all articles resulting from the same keyword search). The set of texts creates a *corpus*. The texts, in turn, can be divided into smaller units of interest for the analysis, such as paragraphs, sentences or words. These units are known as *tokens*.
+
+The `tidytext` package allows easy *tokenisation* of a corpus.
+
+It is also common to construct term-document matrices for text analysis, where the rows represent the terms and the columns the documents, similar to the presence-absence matrices we use in ecology for species.
+However, in the tidy philosophy, the structure of one *token* per row would be maintained.
+
+There are various methodologies and theoretical frameworks for text analysis. Among them, the study of the relationship between words is one of the most common. This approach examines which words tend to follow others immediately, or which words tend to co-occur within the same documents. In this second analysis I will focus on this seminar.
+
+There are many other ways to analyse texts such as sentiment analysis, text classification, topic modelling, etc. Here you can find more information about text analysis in R: <https://guides.library.upenn.edu/penntdm/r>.
+
+```{r word relationship}
+library(tidytext) #text miny under tidy philosophy
+library(widyr) #widen, process & re-tidy data (calculates paiwise correlations and distance)
+library(tm) #stop words in spanish
+
+#folder path
+folder_path <- here("texts/")
+
+#PDF files: Notas Ecoinformáticas + description of Ecoinformatica group
+pdf_files <- list.files(folder_path, pattern = "\\.pdf$", full.names = TRUE)
+
+textos <- map(pdf_files, read_pdf)
+
+textos_df <- bind_rows(textos) |> 
+  mutate(document = str_replace(document, pattern = paste0(folder_path, "/"), replacement = ""))
+
+str(textos_df)
+
+
+stop_words_es <- bind_rows(stop_words,
+                               tibble(word = tm::stopwords("spanish"),
+                                          lexicon = "custom")) |> 
+  filter(lexicon == "custom")
+
+clean_text_R_corr_20 <- function(text) {
+  corpus <- text |>  
+  str_to_lower() |> 
+  replace_date(replacement = "") |> # remove dates
+  replace_time(replacement = "") |> # remove time
+  str_remove_all(pattern = "[[:punct:]]") |> # remove punctuation
+  str_remove_all(pattern = "[^\\s]*[0-9][^\\s]*") |>  # remove mixed string n number
+  replace_contraction() |>  # replace contraction to their multi-word forms
+  replace_word_elongation() |>  # replace informal writing with known semantic replacements
+  str_squish() |>  # reduces repeated whitespace inside a string
+  str_trim() |>  # removes whitespace from start and end of string
+  str_replace_all("análisis estadístico", "análisis_estadístico") |> #avoiding collocations
+  str_replace_all("proyectos de investigación", "proyectos") |> #avoiding collocations
+  str_replace_all("bases de datos", "bases_datos") |> 
+  str_replace_all("buenas prácticas", "buenas_prácticas") |> 
+  str_replace_all("grupo de trabajo", "grupo_trabajo") |> #avoiding collocations
+  str_replace_all("asociación española de ecología terrestre", "AEET") |>  #avoiding collocations
+  str_remove_all(pattern = "^http*") |>  #not working ¿?
+  str_remove_all(pattern = "^www*") |>  # remove webpages
+  as_tibble(value = .) |>
+  rename(text = value) 
+  
+unigram_probs <- corpus |> 
+  unnest_tokens(word, text, strip_numeric = TRUE) |>  
+  count(word, sort = TRUE) |> 
+  mutate(p = n / sum(n))
+
+tidy_skipgrams <- corpus |> 
+  unnest_tokens(ngram, text, token = "ngrams", n = 20) |> 
+  mutate(ngramID = row_number()) |>  
+  unnest_tokens(word, ngram)
+
+
+skipgram_probs <- tidy_skipgrams |> 
+  pairwise_count(word, ngramID, diag = TRUE, sort = TRUE) |>  #Count the number of times each pair of items appear together within a group defined by "feature."
+  mutate(p = n / sum(n))
+
+
+normalized_prob <- skipgram_probs |> 
+  filter(n > 20) |> 
+  rename(word1 = item1, word2 = item2) |> 
+  left_join(unigram_probs |> 
+              select(word1 = word, p1 = p),
+            by = "word1") |> 
+  left_join(unigram_probs |> 
+              select(word2 = word, p2 = p),
+            by = "word2") |> 
+  mutate(p_together = p / p1 / p2)
+
+output <- normalized_prob |> 
+  filter(word1 == "ecoinformática") |> 
+  filter(!word1 %in% stop_words_es$word) |> 
+  filter(!word2 %in% stop_words_es$word) |> 
+  arrange(-p_together)
+
+return(output)
+  
+}
+
+
+textos_df_clean <- textos_df |>
+  mutate(r_corr_gram = map(text, clean_text_R_corr_20))
+
+
+textos_df_clean |>
+  unnest(r_corr_gram) |>
+  select(document, word2, p_together)
+
+textos_df_clean |>
+  unnest(r_corr_gram) |>
+  select(document, word2, p_together) |> 
+  filter(!word2 %in% c("ecoinformática", "verónica", "cruzalonso", "cualquier"))|>
+  distinct( word2, p_together) |> 
+  ggplot( aes(label = word2, size = p_together*10)) +
+  geom_text_wordcloud() +
+  theme_minimal()
+```
+
+## Resources and acknowledgements
+
+The content of this seminar is based on the code developed for the publication *Reassessing science communication for effective farmland biodiversity conservation* <https://www.sciencedirect.com/science/article/pii/S0169534724000326>.
+
+The different sections have been developed using information from various tutorials, books and websites. Most of them are cited throughout the seminar. Other sources of interest for character handling and text analysis in R are: <https://link.springer.com/book/10.1007/978-3-319-03164-4> <http://jvera.rbind.io/post/2017/10/16/spanish-stopwords-for-tidytext-package/> <https://bookdown.org/dereksonderegger/444/string-manipulation.html> <https://github.com/gagolews/stringi?tab=readme-ov-file> <https://www.tidytextmining.com/> <https://users.ssc.wisc.edu/~hemken/Rworkshops/dwr/character.html>
+
+The data cleaning using gbif is a suggestion by Jose Lanuza: <https://scholar.google.com/citations?user=F6C5gFcAAAAJ&hl=en> and the code is inspired by the code developed for the Iberian Bees Database <https://github.com/ibartomeus/IberianBees>.
+
+Ira Hannappel <https://www.uni-goettingen.de/en/659155.html> has provided the bee data used for the taxonomic name cleaning.
+
+The quarto template has been copied from the <https://github.com/DatSciR/ciencia_datos/tree/main> repository developed by Verónica Cruz Alonso and Julen Astigarraga.
+
+For the analysis of word co-ocurrance I've used Ecoinformatics Notes from the Ecosistemas journal <https://ecoinfaeet.github.io/notas-ecoinformaticas.html>.
+
+R copilot has been used in the creation of these materials and DeepL as support for the translation of the text.
+
+This seminar was prepared for the seminar series of the Ecoinformatics Group from the Spanish Association of Terrestrial Ecology and and further developed for the Writing Retreat of the Functional Agrobiodiversity & Agroecology Group. 
+Thanks for organising!
+

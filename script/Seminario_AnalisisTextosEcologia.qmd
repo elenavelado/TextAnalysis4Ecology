@@ -91,7 +91,7 @@ print(scientist)
 
 noquote(scientist)
 
-cat(letters, sep = "-") 
+cat(letters, sep = "_") 
 
 ```
 
@@ -235,7 +235,7 @@ agrep("Bombus_sylvarum", datos_abejas$Especie, value = TRUE)
 
 ## Paquete `stringr`: caracteres con filosofía tidy
 
-`stringr` es un paquete desarrollado para manejar caracteres bajo la filosofía tidy, que mejora algunas aplicabilidades como trabajar con NA.
+`stringr` es un paquete desar rollado para manejar caracteres bajo la filosofía tidy, que mejora algunas aplicabilidades como trabajar con NA.
 
 Existen cuatro familias principales de funciones en stringr:
 
@@ -267,12 +267,12 @@ nuevo_texto
 
 str_trim(nuevo_texto) #elimina espacios en blanco al principio y al final
 
-str_split(nuevo_texto, boundary("word")) #separa palabras
 str_split(nuevo_texto, "") #separa caracteres
 
 ```
 
 ```{r stringr patrones}
+
 print(datos_abejas$Especie)
 str_detect("Apis_mellifera", datos_abejas$Especie) #equivalente a grepl()
 
@@ -290,7 +290,7 @@ str_split(abejorros, "_") #equivalente a strsplit()
 ```
 
 ```{r stringr tamaño}
-poema_espronceda <- str_c("Con diez cañones por banda, viento ",
+poema_espronceda <- c("Con diez cañones por banda, viento ",
                           "en popa a toda vela, no corta el mar, ",
                           "sino vuela un velero bergantín: bajel ",
                           "pirata que llaman, por su bravura, ",

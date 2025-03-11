@@ -1,3 +1,8 @@
-# Análisis de textos con R: ejemplos útiles para la ecología. Seminario para el grupo de EcoInformatica de la AEET
+# Análisis de textos con R: ejemplos útiles para la ecología. Seminario para el grupo de EcoInformatica de la AEET (english below)
 
 Trabajar con caracteres (string data) en R suele ser percibido como una tarea ardua por muchos usuarios. Esto, en ocasiones, limita la reproducibilidad de los flujos de trabajo en ecología. En este seminario trabajaremos en el análisis de textos bajo la filosofía tidy con ejemplos útiles para la investigación ecológica y socio-ecológica. Para ello repasaremos conceptos básicos del trabajo con caracteres en R, incluyendo funciones de R base y del paquete stringr. Posteriormente, aprenderemos a leer archivos pdf y a limpiar textos para su posterior análisis. Se presentarán ejemplos prácticos para la limpieza automática de nombres taxonómicos, la realización de gráficos de nubes de palabras, y cálculos simples como las frecuencias de palabras en textos o la correlación ente palabras para el análisis del contenido.
+
+
+## Text analysis with R: useful examples for ecology.
+
+Working with string data in R is often perceived as dificult task by many users. This sometimes limits the reproducibility of workflows in ecology. In this seminar we will work on text analysis under the tidy philosophy with useful examples for ecological and socio-ecological research. We will review basic concepts of working with characters in R, including functions of base R  and the stringr package. Afterwards, we will learn how to read pdf files and how to clean up texts for further analysis. Practical examples will be presented for the automatic cleaning of taxonomic names, the creation of word cloud graphs, and simple calculations such as word frequencies in texts or the correlation between words for content analysis.

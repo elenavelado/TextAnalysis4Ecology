@@ -2,7 +2,7 @@
 <img src="images/logoAF.jpg" />
 
 Elena Velado-Alonso
-11/03/2025
+12/03/2025
 
 - [<span class="toc-section-number">1</span> Text analysis with R:
   useful examples for
@@ -153,10 +153,10 @@ noquote(scientist)
     [1] Erika Mustermann
 
 ``` r
-cat(letters, sep = "_") 
+cat(letters, sep = "-") 
 ```
 
-    a_b_c_d_e_f_g_h_i_j_k_l_m_n_o_p_q_r_s_t_u_v_w_x_y_z
+    a-b-c-d-e-f-g-h-i-j-k-l-m-n-o-p-q-r-s-t-u-v-w-x-y-z
 
 You can count the number of elements in a string object with `length()`
 function.`nchar()` function gives the number of characters in a string.
@@ -207,10 +207,10 @@ chartr(old = "Funktional AgrobiodÑversity & Agroecology", new = "Functional Agr
 To extract parts of a string, `substr()` function can be used.
 
 ``` r
-substr(x, start = 1, stop = 5)
+substr(x, start = 1, stop = 10)
 ```
 
-    [1] "Funkt"
+    [1] "Funktional"
 
 ``` r
 substr(x, start = 18, stop = 23)
@@ -281,7 +281,7 @@ difficulties we encounter when working with characters in base R. Some
 features of the ‘tidy’ packages simplify working with regular
 expressions, as we will see below.
 
-To modify the content of a string,`sub()` and `gsub()` functions can be
+To modify the content of a string, `sub()` and `gsub()` functions can be
 used. The `sub()` function replaces the first occurrence of a pattern in
 a string, while `gsub()` replaces all occurrences of a pattern in a
 string. For example:
@@ -455,27 +455,27 @@ str_to_lower(scientist) #== tolower()
     [1] "erika mustermann"
 
 ``` r
-text <- "Hallo Functional Agrobiodiversity & Agroecology Group"
-text
+hello <- "Hallo Functional Agrobiodiversity & Agroecology Group"
+hello
 ```
 
     [1] "Hallo Functional Agrobiodiversity & Agroecology Group"
 
 ``` r
-new_text <- str_replace(text, "Functional Agrobiodiversity & Agroecology Group", "FA&A ")
-new_text
+new_hello <- str_replace(hello, "Functional Agrobiodiversity & Agroecology Group", "FA&A ")
+new_hello
 ```
 
     [1] "Hallo FA&A "
 
 ``` r
-str_trim(new_text) #removes whitespaces
+str_trim(new_hello) #removes whitespaces
 ```
 
     [1] "Hallo FA&A"
 
 ``` r
-str_split(new_text, "") #split characteres
+str_split(new_hello, "") #split characteres
 ```
 
     [[1]]
@@ -1101,7 +1101,7 @@ web_texts_df |>
   filter(!word %in% c("göttingen", "university", "georgaugustuniversität", 
                       "ecampus", "dr", "tel", "germany", "pm", "media")) |>
   filter(countWords > 15) |>
-  ggplot( aes(label = word, size = countWords, colour = countWords)) +
+  ggplot( aes(label = word, size = countWords*20, colour = countWords)) +
   geom_text_wordcloud() +
   scale_color_gradient(low = "blue", high = "red") +
   theme_minimal()

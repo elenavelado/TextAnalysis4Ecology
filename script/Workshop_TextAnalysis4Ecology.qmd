@@ -91,7 +91,7 @@ print(scientist)
 
 noquote(scientist)
 
-cat(letters, sep = "_") 
+cat(letters, sep = "-") 
 
 ```
 
@@ -125,7 +125,7 @@ chartr(old = "Funktional AgrobiodÑversity & Agroecology", new = "Functional Agr
 To extract parts of a string, `substr()` function can be used.
 
 ```{r extract characters}
-substr(x, start = 1, stop = 5)
+substr(x, start = 1, stop = 10)
 substr(x, start = 18, stop = 23)
 ```
 
@@ -164,7 +164,7 @@ or here <https://uc-r.github.io/regex#regex_functions_base>.
 
 In my opinion, regular expressions and metacharacters are one of the difficulties we encounter when working with characters in base R. Some features of the ‘tidy’ packages simplify working with regular expressions, as we will see below.
 
-To modify the content of a string,`sub()` and `gsub()` functions can be used. The `sub()` function replaces the first occurrence of a pattern in a string, while `gsub()` replaces all occurrences of a pattern in a string. For example:
+To modify the content of a string, `sub()` and `gsub()` functions can be used. The `sub()` function replaces the first occurrence of a pattern in a string, while `gsub()` replaces all occurrences of a pattern in a string. For example:
 
 ```{r identification replacement characters}
 info <- "Functional Agrobiodiversity & Agroecology Group is guided by principles of ecological intensification to maintain or increase long-term agricultural productivity while protecting and enhancing biodiversity"
@@ -257,14 +257,14 @@ str_to_lower(scientist) #== tolower()
 ```
 
 ```{r stringr replace split}
-text <- "Hallo Functional Agrobiodiversity & Agroecology Group"
-text
-new_text <- str_replace(text, "Functional Agrobiodiversity & Agroecology Group", "FA&A ")
-new_text
+hello <- "Hallo Functional Agrobiodiversity & Agroecology Group"
+hello
+new_hello <- str_replace(hello, "Functional Agrobiodiversity & Agroecology Group", "FA&A ")
+new_hello
 
-str_trim(new_text) #removes whitespaces
+str_trim(new_hello) #removes whitespaces
 
-str_split(new_text, "") #split characteres
+str_split(new_hello, "") #split characteres
 
 ```
 
@@ -509,7 +509,7 @@ web_texts_df |>
   filter(!word %in% c("göttingen", "university", "georgaugustuniversität", 
                       "ecampus", "dr", "tel", "germany", "pm", "media")) |>
   filter(countWords > 15) |>
-  ggplot( aes(label = word, size = countWords, colour = countWords)) +
+  ggplot( aes(label = word, size = countWords*20, colour = countWords)) +
   geom_text_wordcloud() +
   scale_color_gradient(low = "blue", high = "red") +
   theme_minimal()
